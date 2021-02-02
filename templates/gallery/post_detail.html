@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}POST{% endblock %}
+
+
+{% block main %}
+    <div id="ele" data-alerts="alerts" data-titles='{"error": "<em>Danger Title!</em>"}' data-fade="5000" ></div>
+
+    <div class="container" style="margin-top: 5%; margin-bottom: 5%; left: 10%; right: 10%;">
+        <div class="row" style="text-align: center;">
+
+            <div class="col-sm-6" >
+
+                <div class="col-sm-12" style="color: white; text-align: left; padding: 0; width: 100%; margin: 0;padding: 0; margin-bottom: 6%;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: fit-content; font-size: 150%;"><b>{{post.title}}</b></td>
+                            <td style="text-align: right;"><img src="{% static 'img/heart.svg' %}" style="width: 15px;margin-top: -10%;"></td>
+                            <td style="text-align: left; padding: 0;font-size: 15px; color: #F26FBA;width: fit-content;" id="like-count-{{post.pk}}">{{post.likes.count}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="col-sm-12" style="color: white; text-align: left; padding: 0; width: 100%; margin: 0;padding: 0; margin-bottom: 13%;">
+                <div style="text-align: left; font-size: 80%;">
+                    {{post.description}}<br><hr>
+
+                    By : {{post.user.username}}
+                </div>
+            </div>
+
+            <form method="POST" id="post-form"> {% csrf_token %}
+            <div class="col-sm-12" style="width: 100%; margin: 0;padding: 0; margin-bottom: 5%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: fit-content; text-align: left;"><button type="submit" class="btn btn-dark" data-pk='{{post.pk}}' style="color: #F26FBA;">Comment</button></td>
+                        <td style="text-align: right; padding: 0;font-size: 15px; width: fit-content;">
+                            <!--a style="color: #F26FBA;">Like</a-->
+                            <a class="like-dislike-btn" data-pk='{{post.pk}}' href="{% url 'gallery:like_or_dislike' post.pk %}">
+                            {% if request.user in post.likes.all %}
+                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: red;">Get Back Like</i>
+                            {% else %}
+                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: white;">Like</i> <!-- far -->
+                            {% endif %}
+                            </a>
+                        </td>
+                      </tr>
+                </table>
+            </div>
+
+
+            <div class="col-sm-12" style="width: 100%; margin: 0;padding: 0; height: 100px;">
+                
+                <input type="text" class="form-control" id="comment" style="position: absolute;
+                        display: block;
+                        top:0;
+                        left:0;
+                        margin: 0;
+                        height: 100%;
+                        width: 100%;
+                        border: none;
+                        padding: 10px;
+                        box-sizing: border-box;" placeholder="Write a Response...">
+            </div>
+            </form>
+
+            </div>
+            <div class="col-sm-6" style="text-align: center; background-color: #303852;">
+                <img src="{{post.photo.url}}" alt="{{post.title}}" width="200" height="200">
+                <!--img src="{% static 'img/cinarta-f1-transparent.png' %}" width="200" height="200"-->
+            </div>
+            
+
+
+        </div>
+        <br><br><hr>
+        <div id="comment-section">
+            <small style="color: white;">{{post.comments.all.count}} Comment :</small>
+            {% for comment in post.comments.all %}
+                <blockquote class="blockquote" style="padding-left: 5px; font-size: 95%; background-color: #304252;">
+                    <p class="mb-0" style="font-size: 90%; color: white;">{{comment.content}}</p>
+                    <footer class="blockquote-footer" style="background-color: #303852;"><small>{{comment.created_date}}  BY :  </small><cite title="Source Title"><b>{{comment.user.username}}</b></cite></footer>
+                </blockquote>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--form method="POST" id="post-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Comment</label>
+            <input type="text" class="form-control" id="comment" placeholder="Comment">
+        </div>
+        <button type="submit" class="btn btn-primary" data-pk='{{post.pk}}'>Submit</button>
+    </form-->
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+
+ $(".like-dislike-btn").click(function(e){
+      e.preventDefault()
+      var id = $(this).attr("data-pk")
+      $('#like-icon-' + id).attr("class", "fa fa-spinner fa-spin")
+
+      var url = $(this).attr("href")
+      $.ajax({
+        url: url,
+        success: function(s) {
+          if(s.status==true){
+            $('#like-icon-' + id).attr("class", "fas fa-heart");
+            $('#like-count-' + id).html(s.likes);
+            if (s.user_in_likes){ $('#like-icon-' + id).css('color', 'red'); $('#like-icon-' + id).text('Get Back Like');}
+            else{                 $('#like-icon-' + id).css('color', 'white'); $('#like-icon-' + id).text('Like');}
+          }
+          else if(s.status == 'not_login'){
+            $('#like-icon-' + id).attr("class", "fas fa-heart");
+            show_alert_message("you must login first.", 'danger')}
+          else{console.log('e2')}
+        },
+        error: function(error) {
+          console.log('e1');
+          $('#like-icon-' + id).attr("class", "fas fa-heart");
+        }
+      })
+    })
+
+
+$(document).on('submit', '#post-form',function(e){
+    e.preventDefault()
+    var id = $(this).attr("data-pk")
+    //$('#like-icon-' + id).attr("class", "fa fa-spinner fa-spin")
+    var url = '{% url "gallery:comment" post.pk %}'
+    $.ajax({
+        type:'POST',
+        url:url,
+        data:{
+            content:$('#comment').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success:function(s){
+                        console.log('salam log');
+            if(s.status==true){
+                console.log('ok');
+                $('#comment').val('');
+                
+                all_comments = s.post_comments;
+                var cList = $('#comment-section');
+                cList.empty();
+$('<small/>')
+    .attr('style', 'color: white;')
+    .text(s.count + ' Comment :')
+    .appendTo(cList);
+
+
+                $.each(all_comments, function(i, c) {
+                    //console.log(c.username + '  ' + c.created + '  ' + c.content);
+var blockquote = $('<blockquote/>')
+    .addClass('blockquote')
+    .attr('style', 'padding-left: 5px; font-size: 95%; background-color: #304252;')
+    .appendTo(cList);
+var p = $('<p/>')
+    .addClass('mb-0')
+    .attr('style', 'font-size: 90%; color: white;')
+    .text(c.content)
+    .appendTo(blockquote);
+var footer = $('<footer/>')
+    .addClass('blockquote-footer')
+    .attr('style', 'background-color: #303852;')
+    .appendTo(blockquote);
+var small = $('<small/>')
+    .text(c.created + '  BY :  ')
+    .appendTo(footer);
+var cite = $('<cite/>')
+    .attr('title', 'Source Title')
+    .appendTo(footer);
+var b = $('<b/>')
+    .text(c.username)
+    .appendTo(cite);
+
+
+                    });
+            //$('#like-icon-' + id).attr("class", "fas fa-heart");
+            //$('#like-count-' + id).html(s.likes);
+           
+          }
+          else if(s.status == 'not_login'){
+            //$('#like-icon-' + id).attr("class", "fas fa-heart");
+            show_alert_message("you must login first.", 'danger')}
+          else if(s.status == 'bad_content'){show_alert_message('not valid comment', 'danger')}
+          else{console.log('e2')}
+
+            
+        },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}DELETE{% endblock %}
+
+
+{% block main %}
+
+
+
+<div class="container">
+	<form method="post">{% csrf_token %}
+        <p style="color: red;">are you sure to delete "{{object}}" ?</p>
+		<button class="btn btn-primary" onClick="javascript:history.go(-1);">Cancel</button>
+		<button type="submit" class="btn btn-danger">Delete</button>
+	</form>
+</div>
+<br><br><br>
+
+
+
+
+{% endblock %}

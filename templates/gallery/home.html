@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}DASHBOARD{% endblock %}
+
+
+{% block main %}
+
+<!--p>hi {{user.get_username}}</p>
+<a href="/">main page</a>
+<a href="{% url 'gallery:create' %}">create</a>
+<a href="{% url 'gallery:logout' %}">logout</a>
+
+{% for post in object_list %}
+    <div>
+        <p>{{post.title}}</p>
+        <a href="{% url 'gallery:delete' post.pk %}">(delete)</a>
+        <img src="{{post.photo.url}}" alt="{{post.title}}">
+        <p>{{post.description}}</p>
+        <p>{{post.created}}</p>
+        <p>sender: {{post.user}}</p>
+        <br>-----------------------------------------
+    </div>
+{% empty %}
+    <div>empty</div>
+{% endfor %}
+
+
+{% if page_obj.has_previous %}
+    <a href="{% url 'gallery:posts' %}?page={{page_obj.previous_page_number}}">
+        previous page
+    </a>
+{% endif %}
+{% if page_obj.has_next %}
+    <a href="{% url 'gallery:posts' %}?page={{page_obj.next_page_number}}">
+        next page
+    </a>
+{% endif %}
+-->
+
+
+    <div class="container vertical-menu">
+        <div style="margin-top: 30%; font-size: 10px;"><a style="color: white;" >MY DASHBOARD</a></div><br>
+        <div style="margin-top: 20%; font-size: 10px;"><a style="color: white; z-index:0;" href="{% url 'gallery:logout' %}">SIGN OUT</a></div><br>
+        <div style="margin-top: 20%; font-size: 10px;"><a style="color: white; z-index:0;" href="{% url 'gallery:create' %}">NEW POST</a></div><br>
+
+    </div>
+
+    <div class="container vertical-menu-responsive">
+        <a style="color: white;" >MY DASHBOARD</a>
+        <a style="color: white; margin-left:10%; z-index:0;" href="{% url 'gallery:logout' %}">SIGN OUT</a>
+        <a style="color: white; margin-left:10%; z-index:0;" href="{% url 'gallery:create' %}">NEW POST</a>
+
+    </div>
+    <div class="Dashboard">
+    <div class="card-columns">
+            
+        {% for post in object_list %}
+            <div class="card bg-dark text-white">
+                <img class="card-img" src="{{post.photo.url}}" alt="{{post.title}}">
+                <div class="card-img-overlay d-flex flex-column justify-content-end">
+                    <div class="card-header bg-transparent">
+                        <a href={% url 'gallery:detail' post.slug %}><h4 class="card-title"><small>{{post.title}}</small></h4></a>
+                    </div>
+                    <div class="card-body bg-transparent">
+                        <h6 class="card-subtitle"><small>{{post.description}}</small></h6>
+                    </div>
+                    <div class="card-footer ">
+                        <p><small>{{post.created}}</small></p>
+                        <a class="like-dislike-btn" data-pk='{{post.pk}}' href="{% url 'gallery:like_or_dislike' post.pk %}">
+                            {% if request.user in post.likes.all %}
+                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: red;"></i>
+                            {% else %}
+                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: white;"></i> <!-- far -->
+                            {% endif %}
+                        </a>
+                        <span id="like-count-{{post.pk}}">{{post.likes.count}}</span>
+                        <a href="{% url 'gallery:detail' post.slug %}"><i class="fas fa-comment-alt"></i></a><span id="like-count-{{post.pk}}">  {{post.comments.all.count}}</span>
+                    </div>
+
+                </div>
+            </div>
+            <a href="{% url 'gallery:update' post.pk %}" style="color: white;"><i class="far fa-edit"></i></a>
+            <a href="{% url 'gallery:delete' post.pk %}" style="margin-left: 5px; color: red;"><i class="far fa-trash-alt"></i></a>
+            
+        {% endfor %}
+        </div>
+        <br>
+        {% if page_obj.has_previous %}
+            <a href="{% url 'gallery:home' %}?page={{page_obj.previous_page_number}}" style="margin-right: 10px;">
+                previous page <i class="fas fa-arrow-left"></i>
+            </a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a href="{% url 'gallery:home' %}?page={{page_obj.next_page_number}}" style="margin-left: 10px;">
+                next page <i class="fas fa-arrow-right"></i>
+            </a>
+        {% endif %}
+    </div>
+    <!--div class="container Dashboard">
+        <div class="row ">
+            <div class="col-sm-4 index-posts">
+                <h3 style="font-size: 20px;">Excepteur sint.</h3>
+                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
+                <div class="row">
+                    <div class="col-sm-4" style="font-size: 16px;"><img src="{% static 'img/favorite-white-24dp.svg' %}" style="width: 20px;height:auto; margin-right: 10px;">120</div>
+                    <div class="col-sm-4" style="font-size: 16px;"><img src="{% static 'img/comment-white-24dp.svg' %}" style="width: 20px;height:auto; margin-right: 10px;">20</div>
+                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
+                </div>
+            </div>
+            <div class="col-sm-4 index-posts">
+                <h3 style="font-size: 20px;">Excepteur sint.</h3>
+                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
+                <div class="row">
+                    <div class="col-sm-4" style="font-size: 16px;"><img src="{% static 'img/favorite-white-24dp.svg' %}" style="width: 20px;height:auto; margin-right: 10px;">120</div>
+                    <div class="col-sm-4" style="font-size: 16px;"><img src="{% static 'img/comment-white-24dp.svg' %}" style="width: 20px;height:auto; margin-right: 10px;">20</div>
+                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div-->
+    
+
+
+
+{% endblock %}
+
+{% block script%}
+ $(".like-dislike-btn").click(function(e){
+      e.preventDefault()
+      var id = $(this).attr("data-pk")
+      $('#like-icon-' + id).attr("class", "fa fa-spinner fa-spin")
+
+      var url = $(this).attr("href")
+      $.ajax({
+        url: url,
+        success: function(s) {
+          if(s.status==true){
+            $('#like-icon-' + id).attr("class", "fas fa-heart");
+            $('#like-count-' + id).html(s.likes);
+            if (s.user_in_likes){ $('#like-icon-' + id).css('color', 'red')}
+            else{                 $('#like-icon-' + id).css('color', 'white')}
+          }
+          else if(s.status == 'not_login'){
+            $('#like-icon-' + id).attr("class", "fas fa-heart");
+            show_alert_message("you must login first.", 'danger')}
+          else{console.log('e2')}
+        },
+        error: function(error) {
+          console.log('e1');
+          $('#like-icon-' + id).attr("class", "fas fa-heart");
+        }
+      })
+    })
+
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}Bootstrap Example{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
+
+    <link href="{% static 'css/clean.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles2.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styles2.css' %}" />
+
+</head>
+
+<body style="background-color: #303852;">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
+        <div class="container-fluid" style="margin-right: 7%; margin-left: 7%;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'gallery:posts' %}">The Cinarta Kid</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-size: 10px; color: white;" href="#">FEED</a>
+                    </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:home' %}">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:logout' %}">SIGNOUT</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:register' %}">SIGNUP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:login' %}">SIGNIN</a>
+                            </li>
+                        {% endif %}
+
+                </ul>
+                <ul class="navbar-nav navbar-right ">
+                    <li>
+                        <a style="padding-left: 0px;" href="https://www.instagram.com/thecinartakid"> <img src="{% static 'img/instagram.svg' %}" height="auto" width="12px" ;> </a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 0px;" href="#Website"> <img src="{% static 'img/WEB.svg.jpg' %}" height="auto" width="24px" ;></a>
+                    </li>
+                    <li>
+                        <a style="padding-left: 0px;" href="#Profile"> <img src="{% static 'img/user.svg' %}" height="auto" width="12px" ;></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    {% block main %}
+
+    {% endblock %}
+
+
+
+    <footer class="navbar navbar-expand-lg navbar-inverse navbar-dark" style="margin-bottom: 1%;">
+        <div class="container-fluid" style="margin-right: 7%; margin-left: 7%;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'gallery:posts' %}">The Cinarta Kid</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-size: 10px; color: white;" href="#">FEED</a>
+                    </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:home' %}">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:logout' %}">SIGNOUT</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:register' %}">SIGNUP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 10px; color: white;" href="{% url 'gallery:login' %}">SIGNIN</a>
+                            </li>
+                        {% endif %}
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin: -1%; padding: 0;">
+                    <button onclick="topFunction()" id="bttop" title="Go to top" class="ToTop"><img src="/static/img/arrow_upward-white-18dp.svg" alt=""></button>
+
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{% static 'js/clean.js' %}"></script>
+
+  <script src="{% static 'js/bsAlerts/jquery.bsAlerts.min.js' %}"></script>
+
+<script>
+
+    
+    function topFunction() {
+        // window.requestAnimationFrame(topFunction);
+        // window.scrollTo(0, document.documentElement.scrollTop - document.documentElement.scrollTop / 10);
+        
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        // window.webkitRequestAnimationFrame(topFunction);
+    }
+
+
+    function show_alert_message(msg, prort) {
+      topFunction();
+      console.log(msg)
+      $("#ele").trigger("add-alerts", [
+        {
+          "message": msg,
+          "priority": prort
+        }
+      ]);
+    }
+
+{% block script %}
+
+
+{% endblock %}
+  </script>
+</body>
+
+</html>
