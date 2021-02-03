@@ -1,11 +1,11 @@
-@font-face{font-family:IRANSans;font-style:normal;font-weight:bold;src:url('../fonts/eot/IRANSansWeb(FaNum)_Bold.eot');src:url('../fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),
-  url('../fonts/woff/IRANSansWeb(FaNum)_Bold.woff') format('woff'),
-  url('../fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf') format('truetype');}
- @font-face{font-family:IRANSans;font-style:normal;font-weight:300;src:url('../fonts/eot/IRANSansWeb(FaNum)_Light.eot');src:url('../fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/woff2/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),
-  url('../fonts/woff/IRANSansWeb(FaNum)_Light.woff') format('woff'),
-  url('../fonts/ttf/IRANSansWeb(FaNum)_Light.ttf') format('truetype');}
+@font-face{font-family:IRANSans;font-style:normal;font-weight:bold;src:url('fonts/eot/IRANSansWeb(FaNum)_Bold.eot');src:url('fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),
+  url('fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),
+  url('fonts/woff/IRANSansWeb(FaNum)_Bold.woff') format('woff'),
+  url('fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf') format('truetype');}
+ @font-face{font-family:IRANSans;font-style:normal;font-weight:300;src:url('/fonts/eot/IRANSansWeb(FaNum)_Light.eot');src:url('/fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),
+  url('fonts/woff2/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),
+  url('fonts/woff/IRANSansWeb(FaNum)_Light.woff') format('woff'),
+  url('fonts/ttf/IRANSansWeb(FaNum)_Light.ttf') format('truetype');}
   body,html,h1,h2,h3,h4,h5,h6,header,.heading-font,.alt-font,.nav > li > a{font-family:IRANSans!important}
   body,html,h1,h2,h3,h4,h5,h6,a,.heading-font,.alt-font,.nav > li > a {
       font-family:IRANSans!important

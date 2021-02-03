@@ -2,176 +2,189 @@
 {% load static %}
 {% block main %}
 
-    <div class="container" style="background-color: white; margin-top: 2%; margin-bottom: 2%;">
-        <div class="row">
-            <div class="col-sm-4" style="text-align: center;">
-                <h3 style="font-family:Arial, Helvetica, sans-serif; color: #CF00D6;"> linear gradiant </h3>
+<section class="mainbody">
+
+
+
+
+    <!---********************mahsoolat*******-->
+
+
+
+       <!--Section: Block Content-->
+<section class="mahsoolat">
+  <h3 style="color:rgb(175, 12, 12);text-align: center;">دسته بندی محصولات</h3>
+  <br>
+  <!-- Grid row -->
+
+  <div class="row">
+
+    <!-- Grid column -->
+    <div class="col-md-12 mb-4">
+      <div class="slider container">
+      <!-- Card -->
+      <div class="m-2">
+        <div class="view zoom overlay z-depth-2 rounded">
+          <a href="#!">
+            <div class="mask">
+              <img class="img-fluid w-100"
+              src="assets/img/رمان.Jpg"  href="#">
+              <div class="mask rgba-black-slight"></div>
             </div>
-            <div class="col-sm-4" style="text-align: center;"><img src="../static/cinarta-f1-transparent.png" width="200" height="200"></div>
+          </a>
+        </div>
+        <div class="text-center pt-4">
+          <h5>رمان/داستان کوتاه</h5>
+          <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
+          <hr>
+          <button type="button" class="btn btn-outline-danger">مشاهده</button>
+        </div>
+      </div>
 
+      <div class="m-2">
+        <div class="view zoom overlay z-depth-2 rounded">
+          <a href="#!">
+            <div class="mask">
+              <img class="img-fluid w-100"
+              src="assets/img/اشعار.Jpg"  href="#">
+              <div class="mask rgba-black-slight"></div>
+            </div>
+          </a>
+        </div>
+        <div class="text-center pt-4">
+          <h5>اشعار</h5>
+          <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
+          <hr>
+          <button type="button" class="btn btn-outline-danger">مشاهده</button>
+        </div>
+      </div>
 
+      <div class="m-2">
+        <div class="view zoom overlay z-depth-2 rounded">
+          <a href="#!">
+            <div class="mask">
+              <img class="img-fluid w-100"
+              src="assets/img/سایر.Jpg" href="#">
+              <div class="mask rgba-black-slight"></div>
+            </div>
+          </a>
+        </div>
+        <div class="text-center pt-4">
+          <h5>غیرداستانی/سایر</h5>
+          <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
+          <hr>
+          <button type="button" class="btn btn-outline-danger">مشاهده</button>
         </div>
     </div>
 
-
-    <div class="card-columns">
-            
-        {% for post in object_list %}
-            <div class="card bg-dark text-white">
-                <img class="card-img" src="{{post.photo.url}}" alt="{{post.title}}">
-                <div class="card-img-overlay d-flex flex-column justify-content-end">
-                    <div class="card-header bg-transparent">
-                        <h4 class="card-title"><small>{{post.title}}</small></h4>
-                    </div>
-                    <div class="card-body bg-transparent">
-                        <h6 class="card-subtitle"><small>{{post.description}}</small></h6>
-                    </div>
-                    <div class="card-footer ">
-                        <p><small>{{post.created}}</small></p>
-                        <a class="like-dislike-btn" data-pk='{{post.pk}}' href="{% url 'gallery:like_or_dislike' post.pk %}">
-                            {% if request.user in post.likes.all %}
-                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: red;"></i>
-                            {% else %}
-                                <i id="like-icon-{{post.pk}}" class="fas fa-heart" style="color: white;"></i> <!-- far -->
-                            {% endif %}
-                        </a>
-                        <span id="like-count-{{post.pk}}">{{post.likes.count}}</span>
-                    </div>
-
-                </div>
-            </div>
-            
-    {% endfor %}
-    </div>
-
-    
-    <!-- <div class="container">
-        <div class="row ">
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-            <div class="col-sm-3 index-posts">
-                <h3 style="font-size: 20px;">Excepteur sint.</h3>
-                <div style="margin-bottom: 80%; font-size: 14px;">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
-                <div class="row">
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/favorite-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">120</div>
-                    <div class="col-sm-4" style="font-size: 16px;"><img src="../static/comment-white-24dp.svg" style="width: 20px;height:auto; margin-right: 10px;">20</div>
-                    <div class="col-sm-4" style="font-size: 16px;">SHARE</div>
-                </div>
-            </div>
-
-        </div>
-        </div>  -->
-    <br>
-
-    <div class="container" style="background-color: #333052; padding: 8%;">
-        <h3 style="font-size: 52px; color: #2699FB; text-align: center;">Team Member</h3>
-        <div class="row">
-            <div class="col-sm-4" style="padding: 5%;">
-                <div style="text-align: center;"><img src="../static/ali.jpg" style="width: 80%; height: auto; border-radius: 50%;"></div>
-                <h3 style="font-size: 24px; color: #2699FB;">ali asadi</h3>
-                <div style="font-size: 11px; color: #2699FB;">developer</div>
-                <div style="font-size: 14px; color: #2699FB;">internet engineering project </div>
-            </div>
-            <div class="col-sm-4" style="padding: 5%;">
-                <div style="text-align: center;"><img src="../static/hamid.jpg" style="width: 80%; height: auto; border-radius: 50%;"></div>
-                <h3 style="font-size: 24px; color: #2699FB;">hamid rostampour</h3>
-                <div style="font-size: 11px; color: #2699FB;">developer</div>
-                <div style="font-size: 14px; color: #2699FB;">internet engineering project </div>
-            </div>
-            <div class="col-sm-4" style="padding: 5%;">hami
-                <div style="text-align: center;"><img src="../static/arman.jpg" style="width: 80%; height: auto; border-radius: 50%;"></div>
-                <h3 style="font-size: 24px; color: #2699FB;">arman ghamgosar</h3>
-                <div style="font-size: 11px; color: #2699FB;">developer</div>
-                <div style="font-size: 14px; color: #2699FB;">internet engineering project </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container" style="background-color: white; margin-top: 2%; margin-bottom: 2%;">
-        <div class="row">
-            <div class="" style="text-align: center;">
-                <h3 style="font-family:Arial, Helvetica, sans-serif; color: #CF00D6; font-size: 100%;"> Platograph </h3>
-            </div>
+    <div class="m-2">
+      <div class="view zoom overlay z-depth-2 rounded">
+        <a href="#!">
+          <div class="mask">
+            <img class="img-fluid w-100"
+            src="assets/img/اشعار.Jpg" href="#">
+            <div class="mask rgba-black-slight"></div>
+          </div>
+        </a>
+      </div>
+      <div class="text-center pt-4">
+        <h5>اشعار</h5>
+        <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
+        <hr>
+        <button type="button" class="btn btn-outline-danger">مشاهده</button>
+      </div>
+  </div>
+  </div>
+  </div>
+</div>
+</section>
+<!--Section: Block Content-->
+        </section>
 
 
-        </div>
-    </div>
 
 
-    <script>
-        //Get the button
-        var mybutton = document.getElementById("myBtn");
+<br>
+<br>
+<br>
 
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {
-            scrollFunction()
-        };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
+
+<section class="offer">
+  <h3 style="color:rgb(175, 12, 12);text-align: center;text-decoration:underline;">فروش ویژه ما</h3>
+  <br>
+  <div class="bg-image"></div>
+  <img  src="assets/img/فروش ویژه.Jpg"  width="100%"  height="500px"   style=" filter: blur(2px);
+  -webkit-filter: blur(2px); border-radius:2px solid white;">
+
+
+  <div class="text-center pt-4">
+
+
+    <p>.برای مشاهده فروش ویژه کلیک کنید</p>
+
+    <hr>
+
+    <button type="button" class="btn btn-outline-danger d-grid gap-2 col-3 mx-auto"    href="#">مشاهده</button>
+
+
+
+
+ <br>
+
+  </section>
+
+<br>
+<br>
+
+
+<!---********************mahsoolat*******-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/slick/slick.min.js"></script>
+   <script>
+ $(document).ready(function () {
+   $('.slider').slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1696,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: true
+
+            }
+        },
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: true
+
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+            }
+        },
+        {
+            breakpoint: 400,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
             }
         }
 
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-
+    ]
+});
+});
+</script>
 {% endblock %}
