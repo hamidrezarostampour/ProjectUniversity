@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 
-from .models import Post, Comment
+from .models import Book, Comment
 
 #from django.shortcuts import render
 
@@ -13,16 +13,16 @@ from .models import Post, Comment
 #    return render(request, 'gallery/home.html')
 
 
-class PostList(ListView):
-    model = Post
+class BookList(ListView):
+    model = Book
     paginate_by = 9
     ordering = ['-created']
 
 
-class PostDetail(DetailView):
+class BookDetail(DetailView):
     def get_object(self):
         slug = self.kwargs.get('slug')
-        return get_object_or_404(Post, slug=slug)
+        return get_object_or_404(Book, slug=slug)
 
 
 
@@ -30,9 +30,9 @@ class PostDetail(DetailView):
 def like_or_dislike(request, pk):
     # print(request.resolver_match)
     user = request.user
-    post = get_object_or_404(Post, pk=pk)
-    post_likes_users = post.likes.all()
-    count = post_likes_users.count()
+    comment = get_object_or_404(Comment, pk=pk)
+    comment_likes_users = comment.likes.all()
+    count = comment_likes_users.count()
 
     if user.is_anonymous:
         return JsonResponse({
@@ -40,12 +40,12 @@ def like_or_dislike(request, pk):
             'status': 'not_login',
         })
 
-    if user in post_likes_users:
-        post.likes.remove(user)
+    if user in comment_likes_users:
+        comment.likes.remove(user)
         count -= 1
         user_in_likes = False
     else:
-        post.likes.add(user)
+        comment.likes.add(user)
         count += 1
         user_in_likes = True
 
@@ -59,7 +59,7 @@ def like_or_dislike(request, pk):
 def comment(request, pk):
     # print(request.resolver_match)
     user = request.user
-    post = get_object_or_404(Post, pk=pk)
+    book = get_object_or_404(Book, pk=pk)
     
     
     if user.is_anonymous:
@@ -73,14 +73,14 @@ def comment(request, pk):
         })
     Comment.objects.create(
         user = user,
-        post = post,
+        book = book,
         content = content
     )
-    post_comments = post.comments.all()
-    count = post_comments.count()
+    book_comments = book.comments.all()
+    count = book_comments.count()
     
     all_comments = []
-    for cmmnt in post_comments:
+    for cmmnt in book_comments:
         all_comments.append({'created': cmmnt.created_date, 'username': cmmnt.user.username, 'content': cmmnt.content})
     
 
@@ -88,5 +88,5 @@ def comment(request, pk):
         'status': user.is_authenticated,
         'count': count,
         'user': user.username,
-        'post_comments': all_comments
+        'book_comments': all_comments
     })

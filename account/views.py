@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegisterForm
 from account.mixins import LoggedInRedirectMixin, AccessUserMixin
 
-from gallery.models import Post
+from gallery.models import Book
 
 
 class Login(LoggedInRedirectMixin, LoginView):
@@ -19,32 +19,32 @@ class Register(LoggedInRedirectMixin, CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('gallery:login')
 
-class PostList(LoginRequiredMixin, ListView):
+class BookList(LoginRequiredMixin, ListView):
     template_name = 'gallery/home.html'
     def get_queryset(self):
-        return Post.objects.filter(user=self.request.user)
+        return Book.objects.filter(user=self.request.user)
     paginate_by = 9
     ordering = ['-created']
 
 
-class PostDelete(AccessUserMixin, DeleteView):
-    model = Post
-    success_url = reverse_lazy('gallery:home')
+# class PostDelete(AccessUserMixin, DeleteView):
+#     model = Post
+#     success_url = reverse_lazy('gallery:home')
 
 
-class PostCreate(LoginRequiredMixin, CreateView):
-    model = Post
-    fields = ('title', 'description', 'photo')
-    success_url = reverse_lazy('gallery:home')
+# class PostCreate(LoginRequiredMixin, CreateView):
+#     model = Post
+#     fields = ('title', 'description', 'photo')
+#     success_url = reverse_lazy('gallery:home')
 
-    def form_valid(self, form):
-        self.obj = form.save(commit=False)
-        self.obj.user = self.request.user
+#     def form_valid(self, form):
+#         self.obj = form.save(commit=False)
+#         self.obj.user = self.request.user
 
-        return super(PostCreate, self).form_valid(form)
+#         return super(PostCreate, self).form_valid(form)
 
 
-class PostUpdate(AccessUserMixin, UpdateView):
-    model = Post
-    fields = ('title', 'description', 'photo')
-    success_url = reverse_lazy('gallery:home')
+# class PostUpdate(AccessUserMixin, UpdateView):
+#     model = Post
+#     fields = ('title', 'description', 'photo')
+#     success_url = reverse_lazy('gallery:home')
