@@ -4,13 +4,13 @@ from django.http import JsonResponse
 
 from .models import Book, Comment
 
-#from django.shortcuts import render
+from django.shortcuts import render
 
 # Create your views here.
 
 
-#def home(request):
-#    return render(request, 'gallery/home.html')
+def index(request):
+    return render(request, 'gallery/index.html')
 
 
 class BookList(ListView):
