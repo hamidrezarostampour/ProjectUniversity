@@ -60,6 +60,8 @@ def comment(request, pk):
     # print(request.resolver_match)
     user = request.user
     book = get_object_or_404(Book, pk=pk)
+
+    print(request)
     
     
     if user.is_anonymous:
@@ -81,7 +83,10 @@ def comment(request, pk):
     
     all_comments = []
     for cmmnt in book_comments:
-        all_comments.append({'created': cmmnt.created_date, 'username': cmmnt.user.username, 'content': cmmnt.content})
+        likers = cmmnt.likes.all()
+        like_count = likers.count()
+        user_in_likes = user in likers
+        all_comments.append({'created': cmmnt.created_date, 'username': cmmnt.user.username, 'content': cmmnt.content, 'like_count': like_count, 'user_in_likes': user_in_likes, 'pk': cmmnt.pk})
     
 
     return JsonResponse({
