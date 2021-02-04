@@ -5,7 +5,8 @@ from account import views as account_view
 app_name = 'gallery'
 
 urlpatterns = [
-    path('', gallery_view.BookList.as_view(), name='books'),
+    #path('', gallery_view.BookList.as_view(), name='books'),
+    path('', gallery_view.index, name='index'),
 
     path('login', account_view.Login.as_view(), name='login'),
     path('logout', account_view.Logout.as_view(), name='logout'),
