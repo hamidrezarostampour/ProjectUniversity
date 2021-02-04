@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,9 +103,14 @@ body {
 </head>
 <body>
 <div class="signup-form">
-    <form action="" method="post">
+    <form action="" method="post"> {% csrf_token %}
 		<h2 style="text-align: right;">ثبت نام</h2>
 		<p style="text-align: right;">فرم زیر را پرکنید</p>
+		{% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div style="color: red;">{{error}}</div><br>
+                {% endfor %}
+		{% endfor %}
 		<hr>
 		<div class="form-group">
 			<div class="input-group">
@@ -113,7 +119,7 @@ body {
 						<span class="fa fa-user"></span>
 					</span>
 				</div>
-				<input type="text" class="form-control" name="username" placeholder="نام/نام خانوادگی" required="required"   style="text-align:right;">
+				{{form.name}}
 			</div>
         </div>
         <div class="form-group">
@@ -123,7 +129,7 @@ body {
 						<span class="fa fa-user"></span>
 					</span>
 				</div>
-				<input type="text" class="form-control" name="username" placeholder="نام کاربری" required="required"   style="text-align:right;">
+				{{form.username}}
 			</div>
         </div>
         <div class="form-group">
@@ -133,7 +139,7 @@ body {
 						<i class="fa fa-paper-plane"></i>
 					</span>
 				</div>
-				<input type="email" class="form-control" name="email" placeholder="ایمیل" required="required"    style="text-align:right;">
+				{{form.email}}
 			</div>
         </div>
 		<div class="form-group">
@@ -143,7 +149,7 @@ body {
 						<i class="fa fa-lock"></i>
 					</span>
 				</div>
-				<input type="text" class="form-control" name="password" placeholder="پسورد" required="required"    style="text-align:right;">
+				{{form.password1}}
 			</div>
         </div>
 		<div class="form-group">
@@ -153,15 +159,18 @@ body {
 						<i class="	fa fa-file-text"></i>
 					</span>
 				</div>
-				<input type="email" class="form-control" name="address" placeholder="نشانی" required="required"    style="text-align:right;">
+				{{form.address}}
 			</div>
 		</div>
 
 		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg">ثبت و ادامه </button>
+            <button type="submit" value="SIGN UP" class="btn btn-primary btn-lg">ثبت و ادامه </button>
         </div>
     </form>
 	<div class="text-center" style="color:black;">اگر قبلا ثبت نام کردید اینجا کلیک کنید.<a style="color:rgb(233, 151, 0);" href="login.html">اینجا</a></div>
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/clean.js' %}"></script>
 </div>
 </body>
 </html>
