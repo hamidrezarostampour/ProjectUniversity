@@ -138,5 +138,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'account.User'
 
 LOGIN_URL = 'gallery:login'
-LOGIN_REDIRECT_URL = 'gallery:home'
+LOGIN_REDIRECT_URL = 'gallery:index'
 LOGOUT_REDIRECT_URL = 'gallery:login'

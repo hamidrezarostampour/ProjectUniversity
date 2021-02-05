@@ -19,12 +19,12 @@ class Register(LoggedInRedirectMixin, CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('gallery:login')
 
-class BookList(LoginRequiredMixin, ListView):
-    template_name = 'gallery/home.html'
-    def get_queryset(self):
-        return Book.objects.filter(user=self.request.user)
-    paginate_by = 9
-    ordering = ['-created']
+# class BookList(LoginRequiredMixin, ListView):
+#     template_name = 'gallery/home.html'
+#     def get_queryset(self):
+#         return Book.objects.filter(user=self.request.user)
+#     paginate_by = 9
+#     ordering = ['-created']
 
 
 # class PostDelete(AccessUserMixin, DeleteView):
