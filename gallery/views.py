@@ -2,20 +2,31 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 
-from .models import Book, Comment, Star
+from .models import Book, Comment, Star, Category
 
 from django.shortcuts import render
 
 # Create your views here.
 
 
-def index(request):
-    return render(request, 'gallery/index.html')
+# def index(request):
+#     return render(request, 'gallery/index.html')
+
+class CategoryList(ListView):
+    model = Category
+    template_name = 'gallery/index.html'
 
 
 class BookList(ListView):
     model = Book
-    paginate_by = 9
+    def get_queryset(self):
+        slug = self.kwargs.get('cat_slug')
+        cat = get_object_or_404(Category, slug=slug)
+        cat_books = Book.objects.filter(category=cat)
+        # cat_books = get_list_or_404(Book, category=cat)
+        print(cat_books)
+        return cat_books
+    paginate_by = 12
     ordering = ['-created']
 
 

@@ -5,8 +5,10 @@ from account import views as account_view
 app_name = 'gallery'
 
 urlpatterns = [
-    path('books', gallery_view.BookList.as_view(), name='books'),
-    path('', gallery_view.index, name='index'),
+    
+    path('', gallery_view.CategoryList.as_view(), name='index'),
+    # path('books', gallery_view.BookList.as_view(), name='books'),
+    path('books/<slug:cat_slug>', gallery_view.BookList.as_view(), name='books'),
 
     path('login', account_view.Login.as_view(), name='login'),
     path('logout', account_view.Logout.as_view(), name='logout'),

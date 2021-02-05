@@ -9,6 +9,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Category(models.Model):
     slug = models.SlugField(max_length=100, unique=True) #, verbose_name='آدرس پست')
     title = models.CharField(max_length=200) #, verbose_name='عنوان')
+    photo = models.ImageField(upload_to="cat_images")
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, instance=self)
         super(Category, self).save(*args, **kwargs)
@@ -23,7 +24,7 @@ class Book(models.Model):
     photo = models.ImageField(upload_to="images") #, verbose_name='تصویر')
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #, verbose_name='کاربر')
     created = models.DateTimeField(auto_now_add=True)
-    author = models.TextField()
+    author = models.CharField(max_length=200)
     # stars = models.ManyToManyField(User, blank=True, related_name='stars')
     number_of_pages = models.IntegerField()
 

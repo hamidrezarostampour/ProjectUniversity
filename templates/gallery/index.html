@@ -23,77 +23,27 @@
     <div class="col-md-12 mb-4">
       <div class="slider container">
       <!-- Card -->
+      {% for category in object_list %}
       <div class="m-2">
         <div class="view zoom overlay z-depth-2 rounded">
-          <a href="#!">
+          <a href="{% url 'gallery:books' category.slug %}">
             <div class="mask">
-              <img class="img-fluid w-100"
-              src="assets/img/رمان.Jpg"  href="#">
+              <img class="img-fluid w-100" src="{{category.photo.url}}" alt="{{category.title}}" href="#">
               <div class="mask rgba-black-slight"></div>
             </div>
           </a>
         </div>
         <div class="text-center pt-4">
-          <h5>رمان/داستان کوتاه</h5>
+          <h5>{{category.title}}</h5>
           <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
           <hr>
+          <a href="{% url 'gallery:books' category.slug %}">
           <button type="button" class="btn btn-outline-danger">مشاهده</button>
-        </div>
-      </div>
-
-      <div class="m-2">
-        <div class="view zoom overlay z-depth-2 rounded">
-          <a href="#!">
-            <div class="mask">
-              <img class="img-fluid w-100"
-              src="assets/img/اشعار.Jpg"  href="#">
-              <div class="mask rgba-black-slight"></div>
-            </div>
           </a>
         </div>
-        <div class="text-center pt-4">
-          <h5>اشعار</h5>
-          <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
-          <hr>
-          <button type="button" class="btn btn-outline-danger">مشاهده</button>
-        </div>
       </div>
-
-      <div class="m-2">
-        <div class="view zoom overlay z-depth-2 rounded">
-          <a href="#!">
-            <div class="mask">
-              <img class="img-fluid w-100"
-              src="assets/img/سایر.Jpg" href="#">
-              <div class="mask rgba-black-slight"></div>
-            </div>
-          </a>
-        </div>
-        <div class="text-center pt-4">
-          <h5>غیرداستانی/سایر</h5>
-          <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
-          <hr>
-          <button type="button" class="btn btn-outline-danger">مشاهده</button>
-        </div>
-    </div>
-
-    <div class="m-2">
-      <div class="view zoom overlay z-depth-2 rounded">
-        <a href="#!">
-          <div class="mask">
-            <img class="img-fluid w-100"
-            src="assets/img/اشعار.Jpg" href="#">
-            <div class="mask rgba-black-slight"></div>
-          </div>
-        </a>
-      </div>
-      <div class="text-center pt-4">
-        <h5>اشعار</h5>
-        <p class="mb-2 text-muted text-uppercase small">برای مشاهده کتاب های بیشتر کلیک کنید</p>
-        <hr>
-        <button type="button" class="btn btn-outline-danger">مشاهده</button>
-      </div>
-  </div>
+      {% endfor %}
+      
   </div>
   </div>
 </div>
@@ -114,7 +64,7 @@
   <h3 style="color:rgb(175, 12, 12);text-align: center;text-decoration:underline;">فروش ویژه ما</h3>
   <br>
   <div class="bg-image"></div>
-  <img  src="assets/img/فروش ویژه.Jpg"  width="100%"  height="500px"   style=" filter: blur(2px);
+  <img  src="{% static 'img/فروش ویژه.JPG' %}" width="100%"  height="500px" style=" filter: blur(2px);
   -webkit-filter: blur(2px); border-radius:2px solid white;">
 
 
