@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block headstyle %}
+{% block headstylescript %}
 
 <script>
 
@@ -22,10 +22,11 @@ function star_fun(url, star, id){
           .appendTo(starInfo);
       }
       else if (s.status == 'not_login') {
-        //show_alert_message("you must login first.", 'danger')
+        show_alert_message("شما ابتدا باید وارد سایت شوید.", 'danger');
+        console.log('nl');
       }
       else if(s.status == 'bad_content'){
-        //show_alert_message('not valid comment', 'danger')
+        show_alert_message('ورودی نامعتبر.', 'danger');
       }
       else {
         console.log('e2')
@@ -60,8 +61,8 @@ function like_dislike_btn(url, id){
           $('#like-icon-' + id).text('Like');
         }
       } else if (s.status == 'not_login') {
-        //$('#like-icon-' + id).attr("class", "fa fa-thumbs-o-up");
-        //show_alert_message("you must login first.", 'danger')
+        $('#like-icon-' + id).attr("class", "");
+        show_alert_message("شما ابتدا باید وارد سایت شوید.", 'danger');
       } else {
         console.log('e2')
       }
@@ -97,7 +98,7 @@ function like_dislike_btn(url, id){
 <section class="mainbody">
 
 
-
+<div id="ele" data-alerts="alerts" data-titles='{"error": "<em>Danger Title!</em>"}' data-fade="5000" ></div>
 
 
   <!--***********************************************************mahsoolat***********************************************************-->
@@ -255,18 +256,6 @@ background:rgb(255, 250, 250);text-align:right;">
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 $(document).on('submit', '#book-form',function(e){
   e.preventDefault()
   var id = $(this).attr("data-pk")
@@ -351,8 +340,6 @@ $(document).on('submit', '#book-form',function(e){
             spantext = "DisLike";
           }
 
-
-
           var like_url = '/api/'+ c.pk +'/like_or_dislike';
           var div2diva = $('<a />')
             .addClass('like-dislike-btn')
@@ -360,10 +347,6 @@ $(document).on('submit', '#book-form',function(e){
             .attr('href', 'javascript:like_dislike_btn(\''+ like_url + '\'\,\''+ c.pk + '\')')
             .appendTo(div2div);
            
-          
-          
-          
-          
           
           var div2divadiv = $('<div />')
             .addClass('like p-2 cursor')
@@ -387,10 +370,10 @@ $(document).on('submit', '#book-form',function(e){
       }
       else if(s.status == 'not_login'){
         //$('#like-icon-' + id).attr("class", "fas fa-heart");
-        show_alert_message("you must login first.", 'danger')
+        show_alert_message("شما ابتدا باید وارد سایت شوید.", 'danger');
       }
       else if(s.status == 'bad_content'){
-        show_alert_message('not valid comment', 'danger')
+        show_alert_message('ورودی نامعتبر.', 'danger');
       }
       else{
         console.log('e2')
@@ -404,42 +387,5 @@ $(document).on('submit', '#book-form',function(e){
   });
 });
 
-
-
-
-{% comment %} $(".like-dislike-btn").click(function (e) {
-  e.preventDefault();
-  var id = $(this).attr("data-pk");
-  $('#like-icon-' + id).attr("class", "fa fa-spinner fa-spin");
-
-  var url = $(this).attr("href");
-  $.ajax({
-    url: url,
-    success: function (s) {
-      if (s.status == true) {
-        //
-        $('#like-count-' + id).html(s.likes);
-        if (s.user_in_likes) {
-          $('#like-icon-' + id).attr("class", "fa fa-thumbs-o-down");
-          $('#like-icon-' + id).css('color', 'red');
-          $('#like-icon-' + id).text('DisLike');
-        } else {
-          $('#like-icon-' + id).attr("class", "fa fa-thumbs-o-up");
-          $('#like-icon-' + id).css('color', 'blue');
-          $('#like-icon-' + id).text('Like');
-        }
-      } else if (s.status == 'not_login') {
-        //$('#like-icon-' + id).attr("class", "fa fa-thumbs-o-up");
-        //show_alert_message("you must login first.", 'danger')
-      } else {
-        console.log('e2')
-      }
-    },
-    error: function (error) {
-      console.log('e1');
-      //$('#like-icon-' + id).attr("class", "fa fa-thumbs-o-up");
-    }
-  })
-}) {% endcomment %}
 
   {% endblock %}

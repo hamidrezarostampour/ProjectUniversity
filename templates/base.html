@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block headstyle %}{% endblock %}
+    {% block headstylescript %}{% endblock %}
     <title>{% block title %}فروشگاه کتاب آنلاین{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
@@ -123,7 +123,26 @@
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/clean.js' %}"></script>
     <script src="{% static 'js/slick/slick.min.js' %}"></script>
+    <script src="{% static 'js/bsAlerts/jquery.bsAlerts.min.js' %}"></script>
    <script>
+function topFunction() {
+        // window.requestAnimationFrame(topFunction);
+        // window.scrollTo(0, document.documentElement.scrollTop - document.documentElement.scrollTop / 10);
+        
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        // window.webkitRequestAnimationFrame(topFunction);
+    }
+function show_alert_message(msg, prort) {
+  topFunction();
+  console.log(msg)
+  $("#ele").trigger("add-alerts", [
+    {
+      "message": msg,
+      "priority": prort
+    }
+  ]);
+}
  $(document).ready(function () {
    $('.slider').slick({
     infinite: true,
