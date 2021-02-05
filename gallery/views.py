@@ -20,12 +20,16 @@ class CategoryList(ListView):
 class BookList(ListView):
     model = Book
     def get_queryset(self):
+        global cat
         slug = self.kwargs.get('cat_slug')
         cat = get_object_or_404(Category, slug=slug)
         cat_books = Book.objects.filter(category=cat)
-        # cat_books = get_list_or_404(Book, category=cat)
-        print(cat_books)
         return cat_books
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = cat
+        return context
+    
     paginate_by = 12
     ordering = ['-created']
 
