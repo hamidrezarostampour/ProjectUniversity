@@ -21,6 +21,12 @@ $(document).ready(function(){
     $("#id_password1").attr('style', 'text-align:right;');
 
 
+    $("#id_password2").attr('placeholder', 'تکرار پسورد');
+    $("#id_password2").attr('class', 'form-control');
+    $("#id_password2").attr('required', 'required');
+    $("#id_password2").attr('style', 'text-align:right;');
+
+
     $("#id_name").attr('placeholder', 'نام و نام خانوادگی');
     $("#id_name").attr('class', 'form-control');
     $("#id_name").attr('required', 'required');
