@@ -139,4 +139,4 @@ AUTH_USER_MODEL = 'account.User'
 
 LOGIN_URL = 'gallery:login'
 LOGIN_REDIRECT_URL = 'gallery:index'
-LOGOUT_REDIRECT_URL = 'gallery:login'
+LOGOUT_REDIRECT_URL = 'gallery:index'
