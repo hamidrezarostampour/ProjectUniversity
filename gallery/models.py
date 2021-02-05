@@ -1,6 +1,8 @@
 from django.db import models
 from account.models import User
 from uuslug import uuslug as slugify
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 # Create your models here.
 
 
@@ -22,10 +24,20 @@ class Book(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #, verbose_name='کاربر')
     created = models.DateTimeField(auto_now_add=True)
     author = models.TextField()
-    stars = models.ManyToManyField(User, blank=True, related_name='stars')
+    # stars = models.ManyToManyField(User, blank=True, related_name='stars')
     number_of_pages = models.IntegerField()
 
     category = models.ManyToManyField(Category)    
+
+    def get_avg_stars_percent(self):
+        book_stars = Star.objects.filter(book=self)
+        book_stars_scores = [bs.score for bs in book_stars]
+        if len(book_stars) == 0:
+            avg = 0
+        else:
+            avg = sum(book_stars_scores) / len(book_stars)
+        return int((avg/5)*100)
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, instance=self)
@@ -48,3 +60,16 @@ class Comment(models.Model):
     
     class Meta:
         ordering = ['-created_date']
+
+
+class Star(models.Model):
+    score = models.IntegerField(default=0,
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(0),
+        ]
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='stars')
+    def __str__(self):
+        return '{} - {} - {}'.format(self.score, self.book.title, self.user.username)

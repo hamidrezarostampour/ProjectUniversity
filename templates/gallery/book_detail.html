@@ -5,6 +5,39 @@
 
 <script>
 
+function star_fun(url, star, id){
+  $.ajax({
+    url: url,
+    success: function (s) {
+      if (s.status == true) {
+        $('#star_rating').attr('style', 'width:'+s.avg+'%;')
+
+        var starInfo = $('#star_info');
+        starInfo.empty();
+        starInfo.text('امتیاز کل: '+ s.avg + ' درصد')
+        $('<br />')
+          .appendTo(starInfo);
+        $('<small />')
+          .text('نظر شما: ' + s.user_score)
+          .appendTo(starInfo);
+      }
+      else if (s.status == 'not_login') {
+        //show_alert_message("you must login first.", 'danger')
+      }
+      else if(s.status == 'bad_content'){
+        //show_alert_message('not valid comment', 'danger')
+      }
+      else {
+        console.log('e2')
+      }
+    },
+    error: function (error) {
+      console.log('e1');
+    }
+  });
+}
+
+
 function like_dislike_btn(url, id){
   console.log(url, id);
   //var id = $(this).attr("data-pk");
@@ -99,15 +132,26 @@ background:rgb(255, 250, 250);text-align:right;">
 
       <div class="text-center">
 
-        <h4>به ما امتیاز دهید:)</h4>
-
-        <ul class="rating">
-          <li class="fa fa-star"></li>
-          <li class="fa fa-star"></li>
-          <li class="fa fa-star"></li>
-          <li class="fa fa-star"></li>
-          <li class="fa fa-star disable"></li>
-        </ul>
+        <h4>به این کتاب امتیاز دهید:)</h4>
+        <span class="score">
+          <div class="score-wrap">
+            <span class="rating stars-active" id="star_rating" style="width:{{ book.get_avg_stars_percent }}%;">
+              <i class="fa fa-star" id="star1" onclick="star_fun('{% url 'gallery:star' book.pk 1 %}', 1, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 2 %}', 2, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 3 %}', 3, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 4 %}', 4, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 5 %}', 5, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+            </span>
+            <span class="stars-inactive">
+              <i class="fa fa-star-o" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 1 %}', 1, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star-o" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 2 %}', 2, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star-o" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 3 %}', 3, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star-o" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 4 %}', 4, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+              <i class="fa fa-star-o" id="star" onclick="star_fun('{% url 'gallery:star' book.pk 5 %}', 5, {{book.pk}})" style="cursor: pointer;" aria-hidden="true"></i>
+            </span>   
+          </div>
+        </span>
+        <small id="star_info"> امتیاز کل: {{ book.get_avg_stars_percent }} درصد</small>
 
 
     </th>
@@ -309,7 +353,6 @@ $(document).on('submit', '#book-form',function(e){
 
 
 
-          var base_url = '{% url "gallery:books" %}';
           var like_url = '/api/'+ c.pk +'/like_or_dislike';
           var div2diva = $('<a />')
             .addClass('like-dislike-btn')

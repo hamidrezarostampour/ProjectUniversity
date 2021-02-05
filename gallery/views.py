@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 
-from .models import Book, Comment
+from .models import Book, Comment, Star
 
 from django.shortcuts import render
 
@@ -61,7 +61,7 @@ def comment(request, pk):
     user = request.user
     book = get_object_or_404(Book, pk=pk)
 
-    print(request)
+    # print(request)
     
     
     if user.is_anonymous:
@@ -94,4 +94,55 @@ def comment(request, pk):
         'count': count,
         'user': user.username,
         'book_comments': all_comments
+    })
+
+
+def star(request, pk, score):
+    
+    # print(request.resolver_match)
+    user = request.user
+    book = get_object_or_404(Book, pk=pk)
+
+    book_stars = Star.objects.filter(book=book)
+    book_stars_users = [bs.user for bs in book_stars]
+    book_stars_scores = [bs.score for bs in book_stars]
+
+    if len(book_stars) == 0:
+        avg = 0
+    else:
+        avg = sum(book_stars_scores) / len(book_stars)
+    avg = int((avg/5) * 100)
+
+    if user.is_anonymous:
+        return JsonResponse({
+            'avg': avg,
+            'status': 'not_login',
+        })
+    if score not in [0, 1, 2, 3, 4, 5]:
+        return JsonResponse({
+            'avg': avg,
+            'status': 'bad_content',
+        })
+
+    user_in_stars = True
+    if user in book_stars_users:
+        user_index = book_stars_users.index(user)
+        book_stars_scores[user_index] = score
+        Star.objects.filter(user=user, book=book).update(score=score)
+    else:
+        Star.objects.create(
+            user=user,
+            book=book,
+            score=score
+        )
+        book_stars_users.append(user)
+        book_stars_scores.append(score)
+        
+    avg = sum(book_stars_scores) / len(book_stars_users)
+    avg = int((avg/5) * 100)
+    return JsonResponse({
+        'status': user.is_authenticated,
+        'avg': avg,
+        'user_in_stars': user_in_stars,
+        'user_score': score
     })

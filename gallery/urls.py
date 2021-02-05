@@ -5,7 +5,7 @@ from account import views as account_view
 app_name = 'gallery'
 
 urlpatterns = [
-    #path('', gallery_view.BookList.as_view(), name='books'),
+    path('books', gallery_view.BookList.as_view(), name='books'),
     path('', gallery_view.index, name='index'),
 
     path('login', account_view.Login.as_view(), name='login'),
@@ -14,6 +14,7 @@ urlpatterns = [
 
     path('api/<int:pk>/like_or_dislike', gallery_view.like_or_dislike, name='like_or_dislike'),
     path('api/<int:pk>/comment', gallery_view.comment, name='comment'),
+    path('api/<int:pk>/star/<int:score>', gallery_view.star, name='star'),
 
     # path('home', account_view.PostList.as_view(), name='home'),
     # path('create', account_view.PostCreate.as_view(), name='create'),
