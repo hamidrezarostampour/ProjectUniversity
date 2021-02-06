@@ -20,6 +20,10 @@ class AboutList(ListView):
     model = Category
     template_name = 'gallery/about.html'
 
+class RahnamaList(ListView):
+    model = Category
+    template_name = 'gallery/rahnama.html'
+
 
 
 class BookList(ListView):
