@@ -27,7 +27,7 @@ class Book(models.Model):
     author = models.CharField(max_length=200)
     # stars = models.ManyToManyField(User, blank=True, related_name='stars')
     number_of_pages = models.IntegerField()
-
+    price = models.DecimalField(max_digits=7, decimal_places=0,default=0)
     category = models.ManyToManyField(Category)    
 
     def get_avg_stars_percent(self):
