@@ -24,6 +24,10 @@ class RahnamaList(ListView):
     model = Category
     template_name = 'gallery/rahnama.html'
 
+class OfferList(ListView):
+    model = Category
+    template_name = 'gallery/offer.html'
+
 
 
 class BookList(ListView):
