@@ -9,12 +9,17 @@ from django.shortcuts import render
 # Create your views here.
 
 
-# def index(request):
-#     return render(request, 'gallery/index.html')
+def about(request):
+    return render(request, 'gallery/about.html')
 
 class CategoryList(ListView):
     model = Category
     template_name = 'gallery/index.html'
+
+class AboutList(ListView):
+    model = Category
+    template_name = 'gallery/about.html'
+
 
 
 class BookList(ListView):
