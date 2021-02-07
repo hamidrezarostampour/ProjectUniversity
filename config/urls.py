@@ -21,6 +21,11 @@ urlpatterns = [
     path('', include('gallery.urls')),
 ]
 
+# urlpatterns += i18n_patterns(
+#     url(r'^admin/', include(admin.site.urls)),
+# )
+
+
 from django.conf import settings
 from django.conf.urls.static import static
 

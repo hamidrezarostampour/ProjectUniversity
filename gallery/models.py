@@ -7,9 +7,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Category(models.Model):
-    slug = models.SlugField(max_length=100, unique=True) #, verbose_name='آدرس پست')
-    title = models.CharField(max_length=200) #, verbose_name='عنوان')
-    photo = models.ImageField(upload_to="cat_images")
+    title = models.CharField(max_length=200, verbose_name='عنوان دسته‌بندی')
+    slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس دسته‌بندی')
+    photo = models.ImageField(upload_to="cat_images", verbose_name='تصویر دسته‌بندی')
+    class Meta:
+        verbose_name = 'دسته‌بندی'
+        verbose_name_plural = 'دسته‌بندی ها'
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, instance=self)
         super(Category, self).save(*args, **kwargs)
@@ -18,17 +21,17 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200) #, verbose_name='عنوان')
-    slug = models.SlugField(max_length=100, unique=True) #, verbose_name='آدرس پست')
-    description = models.TextField() # verbose_name="محتوا")
-    photo = models.ImageField(upload_to="images") #, verbose_name='تصویر')
+    title = models.CharField(max_length=200, verbose_name='عنوان کتاب')
+    slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس کتاب')
+    description = models.TextField(verbose_name="توضیحات")
+    photo = models.ImageField(upload_to="images", verbose_name='تصویر کتاب')
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #, verbose_name='کاربر')
-    created = models.DateTimeField(auto_now_add=True)
-    author = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ تشکیل کتاب')
+    author = models.CharField(max_length=200, verbose_name='نویسنده')
     # stars = models.ManyToManyField(User, blank=True, related_name='stars')
-    number_of_pages = models.IntegerField()
-    price = models.DecimalField(max_digits=7, decimal_places=0,default=0)
-    category = models.ManyToManyField(Category)    
+    number_of_pages = models.IntegerField(verbose_name='تعداد صفحات کتاب')
+    price = models.DecimalField(max_digits=7, decimal_places=0,default=0, verbose_name='قیمت')
+    category = models.ManyToManyField(Category, verbose_name='دسته‌بندی')
 
     def get_avg_stars_percent(self):
         book_stars = Star.objects.filter(book=self)
@@ -39,6 +42,9 @@ class Book(models.Model):
             avg = sum(book_stars_scores) / len(book_stars)
         return int((avg/5)*100)
 
+    class Meta:
+        verbose_name = 'کتاب'
+        verbose_name_plural = 'کتابها'
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, instance=self)
@@ -49,28 +55,33 @@ class Book(models.Model):
 
 
 class Comment(models.Model):
-    content = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
-    created_date = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(verbose_name='محتوا')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='کاربر')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments', verbose_name='کتاب')
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ انتشار')
 
-    likes = models.ManyToManyField(User, blank=True, related_name='likes')
+    likes = models.ManyToManyField(User, blank=True, related_name='likes', verbose_name='لایک ها')
 
     def __str__(self):
         return '{} - {}'.format(self.book.title, self.user.username)
     
     class Meta:
+        verbose_name = 'دیدگاه'
+        verbose_name_plural = 'دیدگاه ها'
         ordering = ['-created_date']
 
 
 class Star(models.Model):
-    score = models.IntegerField(default=0,
+    score = models.IntegerField(default=0, verbose_name='امتیاز',
         validators=[
             MaxValueValidator(5),
             MinValueValidator(0),
         ]
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='stars')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='کاربر')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='stars', verbose_name='کتاب')
+    class Meta:
+        verbose_name = 'امتیاز ستاره‌ای'
+        verbose_name_plural = 'امتیازهای ستاره‌ای'
     def __str__(self):
         return '{} - {} - {}'.format(self.score, self.book.title, self.user.username)

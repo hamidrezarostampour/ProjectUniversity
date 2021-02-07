@@ -3,7 +3,29 @@ from .models import Book, Comment, Category, Star
 
 # Register your models here.
 
-admin.site.register(Book)
-admin.site.register(Comment)
-admin.site.register(Category)
-admin.site.register(Star)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'created', 'author', 'price')
+    list_filter = ('price', 'created')
+    search_fields = ('title', 'slug', 'description', 'number_of_pages')
+    prepopulated_fields = {'slug': ('title',)}
+    ordering = ['-created', 'price']
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'book', 'created_date')
+    list_filter = ('book', 'created_date')
+    search_fields = ('content',)
+    ordering = ['-created_date']
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug')
+    search_fields = ('title', 'slug')
+    prepopulated_fields = {'slug': ('title',)}
+
+class StarAdmin(admin.ModelAdmin):
+    list_display = ('score', 'user', 'book')
+    ordering = ['score']
+
+admin.site.register(Book, BookAdmin)
+admin.site.register(Comment, CommentAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Star, StarAdmin)
