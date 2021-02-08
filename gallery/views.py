@@ -10,6 +10,10 @@ from django.shortcuts import render
 # Create your views here.
 
 
+def items(request):
+    items = Book.objects.all()
+    return items
+
 
 def about(request):
     return render(request, 'gallery/about.html')
@@ -31,8 +35,9 @@ class RahnamaList(ListView):
 
 
 class OfferList(ListView):
-    model = Category
+    model = Book
     template_name = 'gallery/offer.html'
+    items = Book.objects.all()
 
 
 class BookList(ListView):

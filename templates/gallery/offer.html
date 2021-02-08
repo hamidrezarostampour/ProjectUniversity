@@ -3,12 +3,6 @@
 {% block main %}
         <section class="mainbody">
               
-       
-
-
-
-
-
 
 
 <!--***********************************************************mahsoolat***********************************************************-->
@@ -20,242 +14,52 @@
 
 <br>
 
-<div class="container">
-  
-    <div class="row">
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/8.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/8.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="#">کتاب عامه پسند</a></h3>
-                  
-                    <div class="price">
-                        40000
-                        <span>50000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div> 
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/7.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/7.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                 
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب دختری با گوشواره های مروارید</a></h3>
-                 
-                    <div class="price">
-                         30000
-                        <span>35000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/6.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/6Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب  یک عاشقانه آرام</a></h3>
-               
-                    <div class="price">
-                        35000
-                        <span>42000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/11.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/11.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب من گنجشک نیستم</a></h3>
-        
-                    <div class="price">
-                        24000 
-                        <span>29000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-  
-<br>
 
-
-<br>
 
 <div class="container">
-  
     <div class="row">
+    {% for book in object_list %}
+      {% if not book.percent == 0 %}
+
         <div class="col-md-3 col-sm-6">
             <div class="product-grid4">
                 <div class="product-image4">
                     <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/12.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/12.Jpg">
+                        <img class="pic-1" src="{{book.photo.url}}">
+                        <img class="pic-2" src="{{book.photo.url}}">
                     </a>
                     <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
+                        <li><a href="{% url 'gallery:detail' book.slug %}" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
+
                         <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
                     <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
+                    <span class="product-discount-label">-{{book.percent}}%</span>
+
                 </div>
                 <div class="product-content">
-                    <h3 class="title"><a href="#">کتاب یادداشت های شیطان</a></h3>
-                  
-                    <div class="price">
-                        35000
-                        <span>40000</span>
+                  <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.title}}</a></h3>
+                  <div class="price">
+                        {{ book.get_book_offer_price }}
+                        <span>{{book.price}}</span>
                     </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div> 
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/5.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/5.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                 
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب انگار خودم نیستم</a></h3>
-                 
-                    <div class="price">
-                         45000
-                        <span>53000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
+                  <a class="add-to-cart" href="">افزودن به سبد خرید</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1"src="assets/img/پوشه ویژه/9.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/9.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب رویای تبت</a></h3>
-               
-                    <div class="price">
-                        35000
-                        <span>40000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="product-grid4">
-                <div class="product-image4">
-                    <a href="#">
-                        <img class="pic-1" src="assets/img/پوشه ویژه/10.Jpg">
-                        <img class="pic-2" src="assets/img/پوشه ویژه/10.Jpg">
-                    </a>
-                    <ul class="social">
-                        <li><a href="#" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
-                    
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">حراج</span>
-                    <span class="product-discount-label">-10%</span>
-                </div>
-                <div class="product-content">
-                  <h3 class="title"><a href="#">کتاب روی ماه خدا را ببوس </a></h3>
-        
-                    <div class="price">
-                        24000 
-                        <span>29000</span>
-                    </div>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        {% if forloop.counter|divisibleby:4 %}
+  </div>
 </div>
-  
 <br>
+<div class="container">
+  <div class="row">
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </div>
+  </div>
 
 
-
-
-
-
-
-       
    </section>  
   
 
