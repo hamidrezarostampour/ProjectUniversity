@@ -6,55 +6,62 @@ from .models import Book, Comment, Star, Category
 
 from django.shortcuts import render
 
+
 # Create your views here.
+
 
 
 def about(request):
     return render(request, 'gallery/about.html')
 
+
 class CategoryList(ListView):
     model = Category
     template_name = 'gallery/index.html'
+
 
 class AboutList(ListView):
     model = Category
     template_name = 'gallery/about.html'
 
+
 class RahnamaList(ListView):
     model = Category
     template_name = 'gallery/rahnama.html'
+
 
 class OfferList(ListView):
     model = Category
     template_name = 'gallery/offer.html'
 
 
-
 class BookList(ListView):
     model = Book
+
     def get_queryset(self):
         global cat
         slug = self.kwargs.get('cat_slug')
         cat = get_object_or_404(Category, slug=slug)
         cat_books = Book.objects.filter(category=cat)
         return cat_books
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = cat
         return context
-    
+
     paginate_by = 12
     ordering = ['-created']
 
 
 class BookDetail(DetailView):
+
     def get_object(self):
         slug = self.kwargs.get('slug')
         return get_object_or_404(Book, slug=slug)
 
 
-
-#@login_required
+# @login_required
 def like_or_dislike(request, pk):
     # print(request.resolver_match)
     user = request.user
@@ -90,8 +97,7 @@ def comment(request, pk):
     book = get_object_or_404(Book, pk=pk)
 
     # print(request)
-    
-    
+
     if user.is_anonymous:
         return JsonResponse({
             'status': 'not_login',
@@ -102,20 +108,20 @@ def comment(request, pk):
             'status': 'bad_content',
         })
     Comment.objects.create(
-        user = user,
-        book = book,
-        content = content
+        user=user,
+        book=book,
+        content=content
     )
     book_comments = book.comments.all()
     count = book_comments.count()
-    
+
     all_comments = []
     for cmmnt in book_comments:
         likers = cmmnt.likes.all()
         like_count = likers.count()
         user_in_likes = user in likers
-        all_comments.append({'created': cmmnt.created_date, 'username': cmmnt.user.username, 'content': cmmnt.content, 'like_count': like_count, 'user_in_likes': user_in_likes, 'pk': cmmnt.pk})
-    
+        all_comments.append({'created': cmmnt.created_date, 'username': cmmnt.user.username, 'content': cmmnt.content,
+                             'like_count': like_count, 'user_in_likes': user_in_likes, 'pk': cmmnt.pk})
 
     return JsonResponse({
         'status': user.is_authenticated,
@@ -126,7 +132,6 @@ def comment(request, pk):
 
 
 def star(request, pk, score):
-    
     # print(request.resolver_match)
     user = request.user
     book = get_object_or_404(Book, pk=pk)
@@ -139,7 +144,7 @@ def star(request, pk, score):
         avg = 0
     else:
         avg = sum(book_stars_scores) / len(book_stars)
-    avg = int((avg/5) * 100)
+    avg = int((avg / 5) * 100)
 
     if user.is_anonymous:
         return JsonResponse({
@@ -165,9 +170,9 @@ def star(request, pk, score):
         )
         book_stars_users.append(user)
         book_stars_scores.append(score)
-        
+
     avg = sum(book_stars_scores) / len(book_stars_users)
-    avg = int((avg/5) * 100)
+    avg = int((avg / 5) * 100)
     return JsonResponse({
         'status': user.is_authenticated,
         'avg': avg,

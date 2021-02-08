@@ -30,8 +30,15 @@ class Book(models.Model):
     author = models.CharField(max_length=200, verbose_name='نویسنده')
     # stars = models.ManyToManyField(User, blank=True, related_name='stars')
     number_of_pages = models.IntegerField(verbose_name='تعداد صفحات کتاب')
-    price = models.DecimalField(max_digits=7, decimal_places=0,default=0, verbose_name='قیمت')
+    price = models.IntegerField(verbose_name='قیمت')
+    percent = models.IntegerField(verbose_name='درصد تخفیف')
     category = models.ManyToManyField(Category, verbose_name='دسته‌بندی')
+
+
+    def get_book_offer_price(self):
+        new_price = self.price * (1 - (self.percent / 100))
+        return int(new_price)
+
 
     def get_avg_stars_percent(self):
         book_stars = Star.objects.filter(book=self)
