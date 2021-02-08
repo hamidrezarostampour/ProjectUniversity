@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
     {% for book in object_list %}
-      {% if not book.percent == 0 %}
+      {% if not book.percent == 0 or book.offer %}
 
         <div class="col-md-3 col-sm-6">
             <div class="product-grid4">
@@ -33,9 +33,12 @@
 
                         <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
+
+                    {% if not book.percent == 0 %}
                     <span class="product-new-label">حراج</span>
                     <span class="product-discount-label">-{{book.percent}}%</span>
-
+                    {% endif %}
+                    
                 </div>
                 <div class="product-content">
                   <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.title}}</a></h3>
