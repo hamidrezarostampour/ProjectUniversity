@@ -43,8 +43,12 @@
                 <div class="product-content">
                   <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.name}}</a></h3>
                   <div class="price">
+                        {% if not book.percent == 0 %}
                         {{ book.get_book_offer_price }}
                         <span>{{book.price}}</span>
+                        {% elif book.percent == 0 %}
+                        {{book.price}}
+                        {% endif %}
                     </div>
                   <a class="add-to-cart" href="{% url 'gallery:cart_add' book.id %}">افزودن به سبد خرید</a>
                 </div>
