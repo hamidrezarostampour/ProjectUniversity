@@ -33,7 +33,7 @@ class Book(models.Model):
     price = models.IntegerField(verbose_name='قیمت')
     percent = models.IntegerField(verbose_name='درصد تخفیف')
     category = models.ManyToManyField(Category, verbose_name='دسته‌بندی')
-    offer = models.BooleanField(default=False,verbose_name='پیشنهاد ویژه')
+    offer = models.BooleanField(default=False, verbose_name='پیشنهاد ویژه')
 
 
     def get_book_offer_price(self):

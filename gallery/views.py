@@ -5,9 +5,21 @@ from django.http import JsonResponse
 from .models import Book, Comment, Star, Category
 
 from django.shortcuts import render
-
+from django.views.generic import ListView
+from django.db.models import Q
 
 # Create your views here.
+
+
+class SearchResultsView(ListView):
+    model = Book
+    template_name = 'gallery/search.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        products=Book.objects.filter(Q(title__icontains=query))
+        return products
 
 
 def items(request):
