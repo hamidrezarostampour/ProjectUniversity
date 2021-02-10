@@ -7,8 +7,8 @@ app_name = 'gallery'
 urlpatterns = [
     
     path('', gallery_view.CategoryList.as_view(), name='index'),
-    path('about', gallery_view.AboutList.as_view(), name='about'),
-    path('rahnama', gallery_view.RahnamaList.as_view(), name='rahnama'),
+    path('about', gallery_view.about, name='about'),
+    path('rahnama', gallery_view.rahnama, name='rahnama'),
     path('offer', gallery_view.OfferList.as_view(), name='offer'),
     path('shoppingcart', gallery_view.ShoppingCart.as_view(), name='shoppingcart'),
     path('books/<slug:cat_slug>', gallery_view.BookList.as_view(), name='books'),

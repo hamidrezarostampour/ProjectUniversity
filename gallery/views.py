@@ -18,32 +18,40 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('search')
-        products=Book.objects.filter(Q(title__icontains=query))
+        products=Book.objects.filter(Q(title__icontains=query)|Q(author__icontains=query))
         return products
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search"] = self.request.GET.get('search')
+        return context
+    ordering = ['-created']
+    paginate_by = 12
 
 
-def items(request):
-    items = Book.objects.all()
-    return items
+# def items(request):
+#     items = Book.objects.all()
+#     return items
 
 
 def about(request):
     return render(request, 'gallery/about.html')
 
+def rahnama(request):
+    return render(request, 'gallery/rahnama.html')
 
 class CategoryList(ListView):
     model = Category
     template_name = 'gallery/index.html'
 
 
-class AboutList(ListView):
-    model = Category
-    template_name = 'gallery/about.html'
+# class AboutList(ListView):
+#     model = Category
+#     template_name = 'gallery/about.html'
 
 
-class RahnamaList(ListView):
-    model = Category
-    template_name = 'gallery/rahnama.html'
+# class RahnamaList(ListView):
+#     model = Category
+#     template_name = 'gallery/rahnama.html'
 
 class ShoppingCart(ListView):
     model = Book
@@ -53,7 +61,11 @@ class ShoppingCart(ListView):
 class OfferList(ListView):
     model = Book
     template_name = 'gallery/offer.html'
-    items = Book.objects.all()
+    def get_queryset(self):
+        offer_books = Book.objects.filter(Q(offer=True)|Q(percent__gt=0))
+        return offer_books
+    paginate_by = 12
+    ordering = ['-created']
 
 
 class BookList(ListView):

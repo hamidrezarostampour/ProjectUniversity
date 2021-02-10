@@ -56,8 +56,7 @@
               </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="/search" method="get">
-              {% csrf_token %}
+            <form class="form-inline my-2 my-lg-0" action="{% url 'gallery:search_results' %}" method="get">
               <input class="form-control ml-sm-2 " type="search" name="search" id="search" placeholder="" aria-label="Search"  style="border:1px solid red;text-align:right;">
               <button class="btn btn-outline-danger" type="submit">جستجو</button>
             </form>
