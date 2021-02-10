@@ -1,14 +1,15 @@
-
+{% load static %}
+{% load cart_tag %}
 
         <!DOCTYPE html>
         <html>
         <head>
             <title>سبد خرید</title>
-            <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-            <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-            <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-            <link rel="stylesheet" type="text/css" href="assets/js/slick/slick.css">
-            <link rel="stylesheet" type="text/css" href="assets/js/slick/slick-theme.css">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'js/slick/slick.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'js/slick/slick-theme.css' %}">
         </head>
         <body style="background: rgb(204, 106, 57);">
             <div class="container main-section">
@@ -28,52 +29,47 @@
                                   </tr>
                             </thead>
                             <tbody>
+                                {% for key,value in request.session.cart.items %}
                                   <tr>
                                     <td>
                                         <div class="row">
                                             <div class="col-lg-2 col-md-2 mb-2 mb-md-0 Product-img">
-                                                <img src="https://s16.picofile.com/file/8418377950/65d3fe2d_dd8a_41f1_8ea6_11f0480b71ae_200x200.png" alt="..." class="img-responsive"/>
+                                                <img src="{{value.image}}" alt="..." class="img-responsive"/>
                                             </div>
                                             <div class="col-lg-10">
-                                                <h4 class="nomargin">کتاب بوف کور</h4>
-                                                <p>اثر صادق هدایت</p>
+                                                <h4 class="nomargin">کتاب {{value.name}}</h4>
+                                                {% comment %} <p>اثر صادق هدایت</p> {% endcomment %}
                                             </div>
                                         </div>
                                     </td>
-                                    <td> 30000 </td>
+                                    <td> {{value.price}} </td>
                                     <td data-th="Quantity">
-                                        <input type="number" class="form-control text-center" value="1">
+                                        {% comment %} <input type="number" class="form-control text-center" value="{{value.quantity}}"> {% endcomment %}
+                                        <a href="{% url 'gallery:item_increment' value.product_id %}"><button>+</button></a>
+                                        {{value.quantity}}
+                                        <a href="{% url 'gallery:item_decrement' value.product_id %}"><button>-</button></a>
+                                        <a href="{% url 'gallery:item_clear' value.product_id %}"><button>*</button></a>
+                                        
                                     </td>
-                                    <td>30000</td>
+                                    <td>{{ value.price|multiply:value.quantity }}</td>
                                     
                                   </tr>
-                                  <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-2 Product-img">
-                                                <img  src="https://s16.picofile.com/file/8418377950/65d3fe2d_dd8a_41f1_8ea6_11f0480b71ae_200x200.png" alt="..." class="img-responsive"/>
-                                            </div>
-                                            <div class="col-lg-10">
-                                                <h4 class="nomargin">کتاب ملت عشق</h4>
-                                                <p> اثرالیف شافاک</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td> 35000 </td>
-                                    <td data-th="Quantity">
-                                        <input type="number" class="form-control text-center" value="1">
-                                    </td>
-                                    <td>35000 </td>
-                                    
-                                  </tr>
+                                {% endfor %}
+
+
+
+
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td><a href="#" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> ادامه خرید</a></td>
-                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:35000</strong></td>
+                                    <td><a href="{% url 'gallery:index' %}" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> ادامه خرید</a></td>
+                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{sum_price}} <br> تعداد محصول:{{request.session.cart|length}}</strong></td>
+                                    
+
                                     <td class="hidden-xs text-center" style="width:10%;"><a href="#" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></a></td>
                                 </tr>
                             </tfoot>
+                            {% comment %} <a href="{% url 'gallery:cart_detail' %}">clear all</a> {% endcomment %}
                         </table>
                     </div>
                 </div>

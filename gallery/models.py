@@ -21,10 +21,10 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200, verbose_name='عنوان کتاب')
+    name = models.CharField(max_length=200, verbose_name='عنوان کتاب')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس کتاب')
     description = models.TextField(verbose_name="توضیحات")
-    photo = models.ImageField(upload_to="images", verbose_name='تصویر کتاب')
+    image = models.ImageField(upload_to="images", verbose_name='تصویر کتاب')
     # user = models.ForeignKey(User, on_delete=models.CASCADE) #, verbose_name='کاربر')
     created = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ تشکیل کتاب')
     author = models.CharField(max_length=200, verbose_name='نویسنده')
@@ -55,11 +55,11 @@ class Book(models.Model):
         verbose_name_plural = 'کتابها'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title, instance=self)
+        self.slug = slugify(self.name, instance=self)
         super(Book, self).save(*args, **kwargs)
         
     def __str__(self):
-        return '{} - {}'.format(self.title, self.author)
+        return '{} - {}'.format(self.name, self.author)
 
 
 class Comment(models.Model):
@@ -71,7 +71,7 @@ class Comment(models.Model):
     likes = models.ManyToManyField(User, blank=True, related_name='likes', verbose_name='لایک ها')
 
     def __str__(self):
-        return '{} - {}'.format(self.book.title, self.user.username)
+        return '{} - {}'.format(self.book.name, self.user.username)
     
     class Meta:
         verbose_name = 'دیدگاه'
@@ -92,4 +92,4 @@ class Star(models.Model):
         verbose_name = 'امتیاز ستاره‌ای'
         verbose_name_plural = 'امتیازهای ستاره‌ای'
     def __str__(self):
-        return '{} - {} - {}'.format(self.score, self.book.title, self.user.username)
+        return '{} - {} - {}'.format(self.score, self.book.name, self.user.username)

@@ -4,10 +4,10 @@ from .models import Book, Comment, Category, Star
 # Register your models here.
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'created', 'author', 'price')
+    list_display = ('name', 'slug', 'created', 'author', 'price')
     list_filter = ('price', 'created')
-    search_fields = ('title', 'slug', 'description', 'number_of_pages')
-    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('name', 'slug', 'description', 'number_of_pages')
+    prepopulated_fields = {'slug': ('name',)}
     ordering = ['-created', 'price']
 
 class CommentAdmin(admin.ModelAdmin):

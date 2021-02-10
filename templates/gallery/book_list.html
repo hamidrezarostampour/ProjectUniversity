@@ -25,8 +25,8 @@
             <div class="product-grid4">
                 <div class="product-image4">
                     <a href="#">
-                        <img class="pic-1" src="{{book.photo.url}}">
-                        <img class="pic-2" src="{{book.photo.url}}">
+                        <img class="pic-1" src="{{book.image.url}}">
+                        <img class="pic-2" src="{{book.image.url}}">
                     </a>
                     <ul class="social">
                         <li><a href="{% url 'gallery:detail' book.slug %}" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
@@ -36,10 +36,10 @@
                 
                 </div>
                 <div class="product-content">
-                  <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.title}}</a></h3>
+                  <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.name}}</a></h3>
                   <h4 class="title">نویسنده:{{book.author}}</h4>
                   <h4 class="title">قیمت:{{book.price}}</h4>
-                    <a class="add-to-cart" href="">افزودن به سبد خرید</a>
+                    <a class="add-to-cart" href="{% url 'gallery:cart_add' book.id %}">افزودن به سبد خرید</a>
                 </div>
             </div>
         </div>

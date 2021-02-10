@@ -110,12 +110,12 @@ background:rgb(255, 250, 250);text-align:right;">
     <th>
       <div class="row p-5">
         <div class="col-md-6">
-          <img src="{{book.photo.url}}" style="width: 100%;height: 100%;" width=20% height=20%>
+          <img src="{{book.image.url}}" style="width: 100%;height: 100%;" width=20% height=20%>
         </div>
         <div class="col-md-6">
           <div class="text">
 
-            <h4>کتاب {{book.title}}</h4>
+            <h4>کتاب {{book.name}}</h4>
             <p>نویسنده:{{book.author}}</p>
             <P>تعداد صفحات:{{book.number_of_pages}}</P>
             <P>قیمت: {{book.price}} تومان</P>
@@ -126,7 +126,7 @@ background:rgb(255, 250, 250);text-align:right;">
 
           <div style="text-align:right;">
             <button type="button" class="btn btn-outline-danger">قبل</button>
-            <button type="button" class="btn btn-outline-danger">افزودن به سبد خرید</button>
+            <a href="{% url 'gallery:cart_add' book.id %}"><button type="button" class="btn btn-outline-danger">افزودن به سبد خرید</button></a>
           </div>
         </div>
 
