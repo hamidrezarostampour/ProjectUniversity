@@ -24,14 +24,14 @@
         <div class="col-md-3 col-sm-6">
             <div class="product-grid4">
                 <div class="product-image4">
-                    <a href="#">
+                    <a href="{% url 'gallery:detail' book.slug %}">
                         <img class="pic-1" src="{{book.image.url}}">
                         <img class="pic-2" src="{{book.image.url}}">
                     </a>
                     <ul class="social">
                         <li><a href="{% url 'gallery:detail' book.slug %}" data-tip="نمایش"><i class="fa fa-eye"></i></a></li>
                         
-                        <li><a href="#" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
+                        <li><a href="{% url 'gallery:cart_add' book.id %}" data-tip="اضافه به سبد خرید"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
                 
                 </div>

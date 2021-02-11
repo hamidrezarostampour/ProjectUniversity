@@ -53,9 +53,9 @@ class CategoryList(ListView):
 #     model = Category
 #     template_name = 'gallery/rahnama.html'
 
-class ShoppingCart(ListView):
-    model = Book
-    template_name = 'gallery/shoppingcart.html'
+# class ShoppingCart(ListView):
+#     model = Book
+#     template_name = 'gallery/shoppingcart.html'
 
 
 class OfferList(ListView):

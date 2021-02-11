@@ -49,7 +49,9 @@
                                         {% comment %} <input type="number" class="form-control text-center" value="{{value.quantity}}"> {% endcomment %}
                                         <a href="{% url 'gallery:item_increment' value.product_id %}" style="margin:8px; color: black">+</a>
                                         {{value.quantity}}
+                                        {% if value.quantity > 1 %}
                                         <a href="{% url 'gallery:item_decrement' value.product_id %}" style="margin:8px; color:black">-</button></a>
+                                        {% endif %}
                                         <a href="{% url 'gallery:item_clear' value.product_id %}" style="margin:8px; color:red">حذف</button></a>
                                         
                                     </td>
