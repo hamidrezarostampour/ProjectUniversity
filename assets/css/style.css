@@ -215,3 +215,19 @@ footer{
   -webkit-text-stroke: initial;
   /* overflow: hidden; */
 }
+.shoppingcart-button {
+  background-color: #fff;
+  border: none;
+  color: black;
+  padding: 2px 2px 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px 2px 2px;
+  cursor: pointer;
+}
+
+.table {
+  font-family: IRANSans;
+}

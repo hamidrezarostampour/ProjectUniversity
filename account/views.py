@@ -100,6 +100,6 @@ def cart_detail(request):
     cart = Cart(request)
     total_price = 0
     for c in cart.cart:
-        total_price += cart.cart[c]['quantity'] * float(cart.cart[c]['price'])
+        total_price += cart.cart[c]['quantity'] * int(cart.cart[c]['new_price'])
 
     return render(request, 'gallery/shoppingcart.html', context={'sum_price': total_price})

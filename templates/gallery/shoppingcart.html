@@ -23,6 +23,7 @@
                                   <tr>
                                     <th>محصول</th>
                                     <th>قیمت</th>
+                                    <th>درصد تخفیف</th>
                                     <th style="width:10%;">تعداد</th>
                                     <th>قیمت نهایی</th>
                                    
@@ -31,27 +32,28 @@
                             <tbody>
                                 {% for key,value in request.session.cart.items %}
                                   <tr>
-                                    <td>
+                                    <td style="width:50%">
                                         <div class="row">
                                             <div class="col-lg-2 col-md-2 mb-2 mb-md-0 Product-img">
                                                 <img src="{{value.image}}" alt="..." class="img-responsive"/>
                                             </div>
                                             <div class="col-lg-10">
                                                 <h4 class="nomargin">کتاب {{value.name}}</h4>
-                                                {% comment %} <p>اثر صادق هدایت</p> {% endcomment %}
+                                                <p>{{value.author}}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td> {{value.price}} </td>
+                                    <td> {{value.percent}} </td>
                                     <td data-th="Quantity">
                                         {% comment %} <input type="number" class="form-control text-center" value="{{value.quantity}}"> {% endcomment %}
-                                        <a href="{% url 'gallery:item_increment' value.product_id %}"><button>+</button></a>
+                                        <a href="{% url 'gallery:item_increment' value.product_id %}" style="margin:8px; color: black">+</a>
                                         {{value.quantity}}
-                                        <a href="{% url 'gallery:item_decrement' value.product_id %}"><button>-</button></a>
-                                        <a href="{% url 'gallery:item_clear' value.product_id %}"><button>*</button></a>
+                                        <a href="{% url 'gallery:item_decrement' value.product_id %}" style="margin:8px; color:black">-</button></a>
+                                        <a href="{% url 'gallery:item_clear' value.product_id %}" style="margin:8px; color:red">حذف</button></a>
                                         
                                     </td>
-                                    <td>{{ value.price|multiply:value.quantity }}</td>
+                                    <td>{{ value.new_price|multiply:value.quantity }}</td>
                                     
                                   </tr>
                                 {% endfor %}
@@ -63,7 +65,7 @@
                             <tfoot>
                                 <tr>
                                     <td><a href="{% url 'gallery:index' %}" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> ادامه خرید</a></td>
-                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{sum_price}} <br> تعداد محصول:{{request.session.cart|length}}</strong></td>
+                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{sum_price}} </strong></td>
                                     
 
                                     <td class="hidden-xs text-center" style="width:10%;"><a href="#" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></a></td>
