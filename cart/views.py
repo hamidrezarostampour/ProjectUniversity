@@ -30,7 +30,7 @@ class OrderedCartList(LoginRequiredMixin, ListView):
         ordereds = Order.objects.filter(ordered=True)
         return ordereds
     
-    ordering = ['-start_date']
+    ordering = ['start_date']
     template_name = 'gallery/ordered_list.html'
 
 
