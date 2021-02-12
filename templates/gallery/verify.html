@@ -1,5 +1,5 @@
 {% load static %}
-{% load cart_tag %}
+{% comment %} {% load cart_tag %} {% endcomment %}
 
         <!DOCTYPE html>
         <html>
@@ -56,6 +56,7 @@
 
 
                         </table>
+                        <a href="{% url 'gallery:index' %}" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> بازگشت به سایت</a>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.decorators import login_required
 from zeep import Client
 from .models import Book, Comment, Star, Category
+from cart.models import Order
 
 from django.shortcuts import render
 from django.views.generic import ListView
@@ -225,28 +227,29 @@ email = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
 CallbackURL = 'http://localhost:8000/verify/' # Important: need to edit for realy server.
 
+@login_required
 def send_request(request):
-    #amount = request.POST.get('sum_price')
-    cart = Cart(request)
-    total_bill = 0.0
-    for key, value in request.session['cart'].items():
-        total_bill = total_bill + (int(value['new_price']) * value['quantity'])
-    amount = total_bill
-    result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
+    cart_id = int(request.POST.get('cart_id'))
+    order = get_object_or_404(Order, pk=cart_id)
+    amount = order.get_total()
+    email = request.user.email
+    result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, '{}?cartid={}'.format(CallbackURL, cart_id))
     if result.Status == 100:
         return redirect('https://sandbox.zarinpal.com/pg/StartPay/' + str(result.Authority))
     else:
         return HttpResponse('Error code: ' + str(result.Status))
 
+@login_required
 def verify(request):
-    cart = Cart(request)
-    total_bill = 0.0
-    for key, value in request.session['cart'].items():
-        total_bill = total_bill + (int(value['new_price']) * value['quantity'])
-    amount = total_bill
+    print(request.GET)
+    cart_id = int(request.GET.get('cartid'))
+    order = get_object_or_404(Order, pk=cart_id)
+    amount = order.get_total()
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], amount)
         if result.Status == 100:
+            order.ordered = True
+            order.save()
             #return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
             return render(request, 'gallery/verify.html', context={'result': str(result.RefID), 'status': True})
         elif result.Status == 101:

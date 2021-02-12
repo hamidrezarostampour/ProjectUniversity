@@ -2,7 +2,6 @@ from django.urls import path
 from . import views as gallery_view
 from account import views as account_view
 from cart import views as cart_view
-from django.conf.urls import url
 
 app_name = 'gallery'
 
@@ -48,6 +47,6 @@ urlpatterns = [
     path('cart/cart-detail/', cart_view.OrderSummaryView.as_view(), name='cart_detail'),
 
 
-    url(r'^request/$', gallery_view.send_request, name='request'),
-    url(r'^verify/$', gallery_view.verify, name='verify'),
+    path('request/', gallery_view.send_request, name='request'),
+    path('verify/', gallery_view.verify, name='verify'),
 ]

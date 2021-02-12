@@ -11,6 +11,16 @@
             <link rel="stylesheet" type="text/css" href="{% static 'js/slick/slick.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'js/slick/slick-theme.css' %}">
         </head>
+        {% for message in messages %}
+        <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        </div>
+        {% endfor %}
         <body style="background: rgb(204, 106, 57);">
             <div class="container main-section">
                 <div class="row">
@@ -71,12 +81,14 @@
                                     
 
                                     <td class="hidden-xs text-center" style="width:10%;">
-                                        <form method="post">
+                                    {% if object.get_total > 0 %}
+                                        <form method="POST" id="cart_form" action="{% url 'gallery:request' %}">
                                             {% csrf_token %}
-                                            <input type="hidden" name="sum_price" id="sum_price" value="500">
+                                            <input type="hidden" name="cart_id" id="cart_id" value="{{ object.pk }}">
 
-                                            <a href="/request" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></a></td>
+                                            <button type="submit" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></button></td>
                                         </form>
+                                    {% endif %}
                                 </tr>
                             </tfoot>
                             {% comment %} <a href="{% url 'gallery:cart_detail' %}">clear all</a> {% endcomment %}

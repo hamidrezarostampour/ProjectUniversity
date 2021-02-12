@@ -45,10 +45,10 @@ class Order(models.Model):
     # coupon = models.ForeignKey(
     #     'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
     
-    being_delivered = models.BooleanField(default=False, verbose_name='being_delivered')
-    received = models.BooleanField(default=False, verbose_name='received')
-    refund_requested = models.BooleanField(default=False, verbose_name='refund_requested')
-    refund_granted = models.BooleanField(default=False, verbose_name='refund_granted')
+    being_delivered = models.BooleanField(default=False, verbose_name='ارسال')
+    received = models.BooleanField(default=False, verbose_name='دریافت')
+    # refund_requested = models.BooleanField(default=False, verbose_name='refund_requested')
+    # refund_granted = models.BooleanField(default=False, verbose_name='refund_granted')
 
     class Meta:
         verbose_name = 'سفارش'

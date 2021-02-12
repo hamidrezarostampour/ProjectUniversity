@@ -20,7 +20,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
             }
             return render(self.request, 'gallery/shoppingcart.html', context)
         except ObjectDoesNotExist:
-            messages.warning(self.request, "You do not have an active order")
+            messages.warning(self.request, "شما سبد خرید فعال ندارید")
             return redirect("/")
 
 
@@ -40,18 +40,18 @@ def add_to_cart(request, id):
         if order.items.filter(item__slug=item.slug).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "This item quantity was updated.")
+            messages.info(request, "تعداد این آیتم آپدیت شد.")
             return redirect("gallery:shoppingcart")
         else:
             order.items.add(order_item)
-            messages.info(request, "This item was added to your cart.")
+            messages.info(request, "این آیتم به سبد خرید شما اضافه شد.")
             return redirect("gallery:shoppingcart")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-        messages.info(request, "This item was added to your cart.")
+        messages.info(request, "این آیتم به سبد خرید شما اضافه شد.")
         return redirect("gallery:shoppingcart")
 
 
@@ -73,13 +73,13 @@ def remove_from_cart(request, id):
             )[0]
             order.items.remove(order_item)
             order_item.delete()
-            messages.info(request, "This item was removed from your cart.")
+            messages.info(request, "این آیتم از سبد خرید شما حذف شد.")
             return redirect("gallery:shoppingcart")
         else:
-            messages.info(request, "This item was not in your cart")
+            messages.info(request, "این آیتم در سبد خرید شما موجود نمیباشد.")
             return redirect("gallery:detail", slug=slug)
     else:
-        messages.info(request, "You do not have an active order")
+        messages.info(request, "شما سبد خرید فعال ندارید.")
         return redirect("gallery:detail", slug=slug)
 
 
@@ -104,11 +104,11 @@ def remove_single_item_from_cart(request, id):
                 order_item.save()
             else:
                 order.items.remove(order_item)
-            messages.info(request, "This item quantity was updated.")
+            messages.info(request, "تعداد این آیتم آپدیت شد.")
             return redirect("gallery:shoppingcart")
         else:
-            messages.info(request, "This item was not in your cart")
+            messages.info(request, "این آیتم در سبد خرید شما موجود نمیباشد")
             return redirect("gallery:detail", slug=slug)
     else:
-        messages.info(request, "You do not have an active order")
+        messages.info(request, "شما سبد خرید فعال ندارید.")
         return redirect("gallery:detail", slug=slug)
