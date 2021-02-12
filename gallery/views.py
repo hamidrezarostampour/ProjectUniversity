@@ -248,10 +248,11 @@ def verify(request):
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], amount)
         if result.Status == 100:
-            return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
+            #return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
+            return render(request, 'gallery/verify.html', context={'result': str(result.RefID), 'status': True})
         elif result.Status == 101:
-            return HttpResponse('Transaction submitted : ' + str(result.Status))
+            return render(request, 'gallery/verify.html', context={'result': str(result.Status), 'status': False})
         else:
-            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))
+            return render(request, 'gallery/verify.html', context={'result': str(result.Status), 'status': False})
     else:
-        return HttpResponse('Transaction failed or canceled by user')
+        return render(request, 'gallery/verify.html')
