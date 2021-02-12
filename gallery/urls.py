@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views as gallery_view
 from account import views as account_view
+from django.conf.urls import url
 
 app_name = 'gallery'
 
@@ -37,5 +38,9 @@ urlpatterns = [
     path('cart/item_decrement/<int:id>/',
          account_view.item_decrement, name='item_decrement'),
     path('cart/cart_clear/', account_view.cart_clear, name='cart_clear'),
-    path('cart/cart-detail/',account_view.cart_detail,name='cart_detail'),
+    path('cart/cart-detail/', account_view.cart_detail, name='cart_detail'),
+
+
+    url(r'^request/$', gallery_view.send_request, name='request'),
+    url(r'^verify/$', gallery_view.verify, name='verify'),
 ]

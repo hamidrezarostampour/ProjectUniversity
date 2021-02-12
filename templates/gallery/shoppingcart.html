@@ -70,7 +70,13 @@
                                     <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{sum_price}} </strong></td>
                                     
 
-                                    <td class="hidden-xs text-center" style="width:10%;"><a href="#" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></a></td>
+                                    <td class="hidden-xs text-center" style="width:10%;">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="sum_price" id="sum_price" value="500">
+
+                                            <a href="/request" class="btn btn-success btn-block">انتقال به درگاه <i class="fa fa-angle-right"></i></a></td>
+                                        </form>
                                 </tr>
                             </tfoot>
                             {% comment %} <a href="{% url 'gallery:cart_detail' %}">clear all</a> {% endcomment %}
