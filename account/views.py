@@ -10,7 +10,6 @@ from gallery.models import Book
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from cart.cart import Cart
 
 
 class Login(LoggedInRedirectMixin, LoginView):
@@ -53,53 +52,3 @@ class Register(LoggedInRedirectMixin, CreateView):
 #     model = Post
 #     fields = ('title', 'description', 'photo')
 #     success_url = reverse_lazy('gallery:home')
-
-
-@login_required
-def cart_add(request, id):
-    print(request)
-    cart = Cart(request)
-    product = Book.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("gallery:cart_detail")
-
-
-@login_required
-def item_clear(request, id):
-    cart = Cart(request)
-    product = Book.objects.get(id=id)
-    cart.remove(product)
-    return redirect("gallery:cart_detail")
-
-
-@login_required
-def item_increment(request, id):
-    cart = Cart(request)
-    product = Book.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("gallery:cart_detail")
-
-
-@login_required
-def item_decrement(request, id):
-    cart = Cart(request)
-    product = Book.objects.get(id=id)
-    cart.decrement(product=product)
-    return redirect("gallery:cart_detail")
-
-
-@login_required
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect("gallery:cart_detail")
-
-
-@login_required
-def cart_detail(request):
-    cart = Cart(request)
-    total_price = 0
-    for c in cart.cart:
-        total_price += cart.cart[c]['quantity'] * int(cart.cart[c]['new_price'])
-
-    return render(request, 'gallery/shoppingcart.html', context={'sum_price': total_price})

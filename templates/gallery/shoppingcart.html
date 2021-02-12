@@ -1,5 +1,5 @@
 {% load static %}
-{% load cart_tag %}
+{% comment %} {% load cart_tag %} {% endcomment %}
 
         <!DOCTYPE html>
         <html>
@@ -30,32 +30,32 @@
                                   </tr>
                             </thead>
                             <tbody>
-                                {% for key,value in request.session.cart.items %}
+                                {% for order_item in object.items.all %}
                                   <tr>
                                     <td style="width:50%">
                                         <div class="row">
                                             <div class="col-lg-2 col-md-2 mb-2 mb-md-0 Product-img">
-                                                <img src="{{value.image}}" alt="..." class="img-responsive"/>
+                                                <img src="{{order_item.item.image.url}}" alt="..." class="img-responsive"/>
                                             </div>
                                             <div class="col-lg-10">
-                                                <h4 class="nomargin">کتاب {{value.name}}</h4>
-                                                <p>{{value.author}}</p>
+                                                <h4 class="nomargin">کتاب {{ order_item.item.name }}</h4>
+                                                <p>{{ order_item.item.author }}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td> {{value.price}} </td>
-                                    <td> {{value.percent}} </td>
+                                    <td> {{ order_item.item.price }} </td>
+                                    <td> {{ order_item.item.percent }} </td>
                                     <td data-th="Quantity">
                                         {% comment %} <input type="number" class="form-control text-center" value="{{value.quantity}}"> {% endcomment %}
-                                        <a href="{% url 'gallery:item_increment' value.product_id %}" style="margin:8px; color: black">+</a>
-                                        {{value.quantity}}
-                                        {% if value.quantity > 1 %}
-                                        <a href="{% url 'gallery:item_decrement' value.product_id %}" style="margin:8px; color:black">-</button></a>
+                                        <a href="{% url 'gallery:item_increment' order_item.item.id %}" style="margin:8px; color: black">+</a>
+                                        {{ order_item.quantity }}
+                                        {% if order_item.quantity > 1 %}
+                                        <a href="{% url 'gallery:item_decrement' order_item.item.id %}" style="margin:8px; color:black">-</button></a>
                                         {% endif %}
-                                        <a href="{% url 'gallery:item_clear' value.product_id %}" style="margin:8px; color:red">حذف</button></a>
+                                        <a href="{% url 'gallery:item_clear' order_item.item.id %}" style="margin:8px; color:red">حذف</button></a>
                                         
                                     </td>
-                                    <td>{{ value.new_price|multiply:value.quantity }}</td>
+                                    <td>{{ order_item.get_final_price }}</td>
                                     
                                   </tr>
                                 {% endfor %}
@@ -67,7 +67,7 @@
                             <tfoot>
                                 <tr>
                                     <td><a href="{% url 'gallery:index' %}" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> ادامه خرید</a></td>
-                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{sum_price}} </strong></td>
+                                    <td colspan="2" class="hidden-xs"><strong>قیمت کل:{{ object.get_total }} </strong></td>
                                     
 
                                     <td class="hidden-xs text-center" style="width:10%;">
