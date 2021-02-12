@@ -41,6 +41,8 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ شروع')
     ordered_date = models.DateTimeField(verbose_name='تاریخ سفارش')
     ordered = models.BooleanField(default=False, verbose_name='سفارش شده')
+
+    ordered_price = models.IntegerField(default=0, verbose_name='مبلغ پرداخت شده')
     
     # coupon = models.ForeignKey(
     #     'Coupon', on_delete=models.SET_NULL, blank=True, null=True)

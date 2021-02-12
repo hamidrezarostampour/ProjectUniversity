@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -23,6 +23,15 @@ class OrderSummaryView(LoginRequiredMixin, View):
             messages.warning(self.request, "شما سبد خرید فعال ندارید")
             return redirect("/")
 
+
+class OrderedCartList(LoginRequiredMixin, ListView):
+    model = Order
+    def get_queryset(self):
+        ordereds = Order.objects.filter(ordered=True)
+        return ordereds
+    
+    ordering = ['-start_date']
+    template_name = 'gallery/ordered_list.html'
 
 
 @login_required
@@ -58,6 +67,7 @@ def add_to_cart(request, id):
 @login_required
 def remove_from_cart(request, id):
     item = get_object_or_404(Book, id=id)
+    slug = item.slug
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
@@ -65,7 +75,7 @@ def remove_from_cart(request, id):
     if order_qs.exists():
         order = order_qs[0]
         # check if the order item is in the order
-        if order.items.filter(item__slug=item.slug).exists():
+        if order.items.filter(item__slug=slug).exists():
             order_item = OrderItem.objects.filter(
                 item=item,
                 user=request.user,
@@ -86,6 +96,7 @@ def remove_from_cart(request, id):
 @login_required
 def remove_single_item_from_cart(request, id):
     item = get_object_or_404(Book, id=id)
+    slug = item.slug
     order_qs = Order.objects.filter(
         user=request.user,
         ordered=False
@@ -93,7 +104,7 @@ def remove_single_item_from_cart(request, id):
     if order_qs.exists():
         order = order_qs[0]
         # check if the order item is in the order
-        if order.items.filter(item__slug=item.slug).exists():
+        if order.items.filter(item__slug=slug).exists():
             order_item = OrderItem.objects.filter(
                 item=item,
                 user=request.user,

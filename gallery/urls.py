@@ -46,6 +46,8 @@ urlpatterns = [
 #     path('cart/cart_clear/', account_view.cart_clear, name='cart_clear'),
     path('cart/cart-detail/', cart_view.OrderSummaryView.as_view(), name='cart_detail'),
 
+    path('cart/history/', cart_view.OrderedCartList.as_view(), name='history'),
+
 
     path('request/', gallery_view.send_request, name='request'),
     path('verify/', gallery_view.verify, name='verify'),

@@ -49,6 +49,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% if user.is_authenticated %}
                    <a class="dropdown-item" href="{% url 'gallery:logout' %}">خروج</a>
+                   <a class="dropdown-item" href="{% url 'gallery:history' %}">تاریخچه خرید</a>
                 {% else %}
                   <a class="dropdown-item" href="{% url 'gallery:login' %}">ورود</a>
                   <a class="dropdown-item" href="{% url 'gallery:register' %}">ثبت نام</a>

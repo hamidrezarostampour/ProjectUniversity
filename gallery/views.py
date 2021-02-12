@@ -249,6 +249,7 @@ def verify(request):
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], amount)
         if result.Status == 100:
             order.ordered = True
+            order.ordered_price = amount
             order.save()
             #return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
             return render(request, 'gallery/verify.html', context={'result': str(result.RefID), 'status': True})
