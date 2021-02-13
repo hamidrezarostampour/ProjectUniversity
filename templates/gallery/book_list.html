@@ -3,7 +3,33 @@
 {% block title %}{{category.title}}{% endblock %}
 {% block main %}
 
+
 <section class="mainbody">
+
+
+    <!--Filters-->
+
+    <h5 style="color:rgb(175, 12, 12);text-align: center;text-decoration:none;">:مرتب سازی براساس</h5>
+<div style="text-align:center;float:center;">
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-outline-light" style="color:rgb(175, 12, 12);">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> جدیدترین ها
+  </label>
+  <label class="btn btn-outline-light"   style="color:rgb(175, 12, 12);">
+    <input type="radio" name="options" id="option2" autocomplete="off"> ارزانترین ها
+  </label>
+  <label class="btn btn-outline-light"   style="color:rgb(175, 12, 12);">
+    <input type="radio" name="options" id="option3" autocomplete="off"> محبوب ترین ها
+  </label>
+</div>
+<hr>
+<br>
+</div>
+
+
+    <!----filters-->
+
+
 
 
 <!--***********************************************************mahsoolat***********************************************************-->
@@ -19,7 +45,7 @@
 <br>
 <div class="container">
     <div class="row">
-    {% for book in object_list %}
+        {% for book in object_list %}
 
         <div class="col-md-3 col-sm-6">
             <div class="product-grid4">
@@ -38,7 +64,16 @@
                 <div class="product-content">
                   <h3 class="title"><a href="{% url 'gallery:detail' book.slug %}">کتاب {{book.name}}</a></h3>
                   <h4 class="title">نویسنده:{{book.author}}</h4>
-                  <h4 class="title">قیمت:{{book.price}}</h4>
+                  <h4 class="title">
+                    <div class="price">قیمت:
+                        {% if not book.percent == 0 %}
+                        {{ book.get_book_offer_price }}
+                        <span>{{book.price}}</span>
+                        {% elif book.percent == 0 %}
+                        {{book.price}}
+                        {% endif %}
+                    </div>
+                  </h4>
                     <a class="add-to-cart" href="{% url 'gallery:cart_add' book.id %}">افزودن به سبد خرید</a>
                 </div>
             </div>
