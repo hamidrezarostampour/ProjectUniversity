@@ -20,7 +20,7 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('search')
-        products=Book.objects.filter(Q(name__icontains=query)|Q(author__icontains=query))
+        products=Book.objects.filter(Q(name__icontains=query)|Q(author__icontains=query)|Q(name__icontains=description))
         return products
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

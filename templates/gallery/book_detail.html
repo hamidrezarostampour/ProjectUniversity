@@ -122,15 +122,23 @@ background:rgb(255, 250, 250);text-align:right;">
             {% if not book.percent == 0 %}
             <p style="color:red;">پیشنهاد ویژه: {{ book.get_book_offer_price }} تومان</p>
             {% endif %}
+            <div>
+            توضیحات:
+              <small>{{book.description}}</small>
+            </div>
+            <br>
+            
           </div>
 
           <div style="text-align:right;">
-            <button type="button" class="btn btn-outline-danger">قبل</button>
+            <button type="button" class="btn btn-outline-danger" onClick="javascript:history.go(-1);">قبل</button>
             <a href="{% url 'gallery:cart_add' book.id %}"><button type="button" class="btn btn-outline-danger">افزودن به سبد خرید</button></a>
           </div>
         </div>
 
       </div>
+      تاریخ انتشار در سایت:
+            <small><data>{{book.created}}</data></small>
       <br>
       <br>
 

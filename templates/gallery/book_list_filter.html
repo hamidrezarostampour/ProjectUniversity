@@ -84,7 +84,6 @@
     <ul class="pagination justify-content-center">
        {% if page_obj.has_previous %}
         <li class="page-item">
-         "{% url 'gallery:books_filter' category.slug 'newest' %}"
             <a class="page-link" href="{% url 'gallery:books_filter' category.slug filter %}?page={{page_obj.previous_page_number}}" aria-label="Previous"   style="color:rgb(175, 12, 12);">
               <span aria-hidden="true">&laquo;</span>
               <span class="sr-only">Previous</span>
