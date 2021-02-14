@@ -30,6 +30,34 @@ class SearchResultsView(ListView):
     paginate_by = 12
 
 
+class FilterResultsView(ListView):
+    model = Book
+    template_name = 'gallery/book_list_filter.html'
+
+    def get_queryset(self):
+        global cat
+        global filter_name
+        slug = self.kwargs.get('cat_slug')
+        filter_name = self.kwargs.get('filter')
+        cat = get_object_or_404(Category, slug=slug)
+
+        if filter_name == 'newest':
+            cat_filter_books = Book.objects.filter(category=cat).order_by('-created')
+        elif filter_name == 'cheapest':
+            cat_filter_books = sorted(Book.objects.filter(category=cat), key=lambda a: a.get_book_offer_price, reverse=True)
+        elif filter_name == 'starest':
+            cat_filter_books = sorted(Book.objects.filter(category=cat), key=lambda a: a.get_avg_stars_percent, reverse=True)
+        return cat_filter_books
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = cat
+        context["filter"] = filter_name
+        return context
+    
+    paginate_by = 12
+
+
 # def items(request):
 #     items = Book.objects.all()
 #     return items

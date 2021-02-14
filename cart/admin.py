@@ -8,6 +8,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'being_delivered',
                     'received',
                     'ordered_price',
+                    'start_date',
                     # 'refund_requested',
                     # 'refund_granted',
                     # 'shipping_address',
@@ -24,6 +25,7 @@ class OrderAdmin(admin.ModelAdmin):
         # 'coupon'
     ]
     list_filter = ['ordered',
+                   'start_date',
                    'being_delivered',
                    'received',
                    'ordered_price',

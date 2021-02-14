@@ -12,6 +12,7 @@ urlpatterns = [
     path('rahnama', gallery_view.rahnama, name='rahnama'),
     path('offer', gallery_view.OfferList.as_view(), name='offer'),
     path('books/<slug:cat_slug>', gallery_view.BookList.as_view(), name='books'),
+    path('books/<slug:cat_slug>/<str:filter>', gallery_view.FilterResultsView.as_view(), name='books_filter'),
     path('search', gallery_view.SearchResultsView.as_view(), name='search_results'),
 
     path('login', account_view.Login.as_view(), name='login'),

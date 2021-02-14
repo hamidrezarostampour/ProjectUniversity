@@ -35,12 +35,12 @@ class Book(models.Model):
     category = models.ManyToManyField(Category, verbose_name='دسته‌بندی')
     offer = models.BooleanField(default=False, verbose_name='پیشنهاد ویژه')
 
-
+    @property
     def get_book_offer_price(self):
         new_price = self.price * (1 - (self.percent / 100))
         return int(new_price)
 
-
+    @property
     def get_avg_stars_percent(self):
         book_stars = Star.objects.filter(book=self)
         book_stars_scores = [bs.score for bs in book_stars]

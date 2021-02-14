@@ -6,8 +6,13 @@
 
 <section class="mainbody">
 
-
     <!--Filters-->
+
+<a href="{% url 'gallery:books_filter' category.slug 'newest' %}">newest</a>
+<a href="{% url 'gallery:books_filter' category.slug 'starest' %}">starest</a>
+<a href="{% url 'gallery:books_filter' category.slug 'cheapest' %}">cheapest</a>
+
+
 
     <h5 style="color:rgb(175, 12, 12);text-align: center;text-decoration:none;">:مرتب سازی براساس</h5>
 <div style="text-align:center;float:center;">
@@ -27,8 +32,7 @@
 </div>
 
 
-    <!----filters-->
-
+    <!--filters-->
 
 
 
