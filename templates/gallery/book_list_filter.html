@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{filter}}{% endblock %}
+{% block title %}{% if filter == "starest" %}محبوبترین ها{% elif filter == "newest" %}جدیدترین ها{% else %}ارزانترین ها{% endif %}{% endblock %}
 {% block main %}
 
 
@@ -31,7 +31,7 @@
 
 
 <section class="mahsoolat">
-  <h3 style="color:rgb(175, 12, 12);text-align: center;text-decoration:underline;">{{category.title}} - {{filter}}</h3>
+  <h3 style="color:rgb(175, 12, 12);text-align: center;text-decoration:underline;">{{category.title}} - {% if filter == "starest" %}محبوبترین ها{% elif filter == "newest" %}جدیدترین ها{% else %}ارزونترین ها{% endif %}</h3>
   
 
 
