@@ -44,7 +44,7 @@ class FilterResultsView(ListView):
         if filter_name == 'newest':
             cat_filter_books = Book.objects.filter(category=cat).order_by('-created')
         elif filter_name == 'cheapest':
-            cat_filter_books = sorted(Book.objects.filter(category=cat), key=lambda a: a.get_book_offer_price, reverse=True)
+            cat_filter_books = sorted(Book.objects.filter(category=cat), key=lambda a: a.get_book_offer_price)
         elif filter_name == 'starest':
             cat_filter_books = sorted(Book.objects.filter(category=cat), key=lambda a: a.get_avg_stars_percent, reverse=True)
         return cat_filter_books

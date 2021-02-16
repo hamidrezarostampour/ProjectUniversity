@@ -8,25 +8,15 @@
 
     <!--Filters-->
 
-<a href="{% url 'gallery:books_filter' category.slug 'newest' %}">newest</a>
-<a href="{% url 'gallery:books_filter' category.slug 'starest' %}">starest</a>
-<a href="{% url 'gallery:books_filter' category.slug 'cheapest' %}">cheapest</a>
 
 
-
-    <h5 style="color:rgb(175, 12, 12);text-align: center;text-decoration:none;">:مرتب سازی براساس</h5>
+<h5 style="color:rgb(175, 12, 12);text-align: center;text-decoration:none;">:مرتب سازی براساس</h5>
 <div style="text-align:center;float:center;">
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-outline-light" style="color:rgb(175, 12, 12);">
-    <input type="radio" name="options" id="option1" autocomplete="off" checked> جدیدترین ها
-  </label>
-  <label class="btn btn-outline-light"   style="color:rgb(175, 12, 12);">
-    <input type="radio" name="options" id="option2" autocomplete="off"> ارزانترین ها
-  </label>
-  <label class="btn btn-outline-light"   style="color:rgb(175, 12, 12);">
-    <input type="radio" name="options" id="option3" autocomplete="off"> محبوب ترین ها
-  </label>
-</div>
+    <div class="btn-group btn-group-toggle" >
+        <a class="btn btn-outline-light" style="color:rgb(175, 12, 12);" href="{% url 'gallery:books_filter' category.slug 'newest' %}">جدیدترین ها</a>
+        <a class="btn btn-outline-light" style="color:rgb(175, 12, 12);" href="{% url 'gallery:books_filter' category.slug 'cheapest' %}">ارزان ترین ها</a>
+        <a class="btn btn-outline-light" style="color:rgb(175, 12, 12);" href="{% url 'gallery:books_filter' category.slug 'starest' %}"> محبوب ترین ها</a>
+    </div>
 <hr>
 <br>
 </div>
