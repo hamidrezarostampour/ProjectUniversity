@@ -279,7 +279,6 @@ def verify(request):
             order.ordered = True
             order.ordered_price = amount
             order.save()
-            #return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
             return render(request, 'gallery/verify.html', context={'result': str(result.RefID), 'status': True})
         elif result.Status == 101:
             return render(request, 'gallery/verify.html', context={'result': str(result.Status), 'status': False})
