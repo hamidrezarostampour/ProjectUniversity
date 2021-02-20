@@ -10,6 +10,8 @@ from django.shortcuts import render
 # from django.views.generic import ListView
 from django.db.models import Q
 
+from config import settings
+
 # Create your views here.
 
 
@@ -253,7 +255,7 @@ client = Client('https://sandbox.zarinpal.com/pg/services/WebGate/wsdl')
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
 email = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
-CallbackURL = 'http://localhost:8000/verify/' # Important: need to edit for realy server.
+CallbackURL = 'https://{}/verify/'.format(settings.ALLOWED_HOSTS[0]) # Important: need to edit for realy server.
 
 @login_required
 def send_request(request):
