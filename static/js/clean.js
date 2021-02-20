@@ -27,10 +27,10 @@ $(document).ready(function(){
     $("#id_password2").attr('style', 'text-align:right;');
 
 
-    $("#id_name").attr('placeholder', 'نام و نام خانوادگی');
-    $("#id_name").attr('class', 'form-control');
-    $("#id_name").attr('required', 'required');
-    $("#id_name").attr('style', 'text-align:right;');
+    $("#id_fullname").attr('placeholder', 'نام و نام خانوادگی');
+    $("#id_fullname").attr('class', 'form-control');
+    $("#id_fullname").attr('required', 'required');
+    $("#id_fullname").attr('style', 'text-align:right;');
 
 
     $("#id_address").attr('placeholder', 'نشانی');
