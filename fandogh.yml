@@ -7,7 +7,7 @@ spec:
     context: .
     media_path: media
     project_type: django
-    python_version: '3.7'
+    python_version: '3.9'
     static_path: static
     wsgi: config.wsgi
   volume_mounts:

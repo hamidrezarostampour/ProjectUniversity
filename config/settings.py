@@ -35,7 +35,7 @@ SECRET_KEY = '-5ht90sgo)%h2=y%trfd+bh0ysthq$hi#(0yu(z-=aaps9_v%a'
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = False
-ALLOWED_HOSTS = ['bs-armanghamgossar.fandogh.cloud', '127.0.0.1']
+ALLOWED_HOSTS = ['bs-mahsa1377.fandogh.cloud', '127.0.0.1']
 
 
 # Application definition
