@@ -27,7 +27,8 @@ class OrderSummaryView(LoginRequiredMixin, View):
 class OrderedCartList(LoginRequiredMixin, ListView):
     model = Order
     def get_queryset(self):
-        ordereds = Order.objects.filter(ordered=True)
+
+        ordereds = Order.objects.filter(user=self.request.user, ordered=True)
         return ordereds
     
     ordering = ['start_date']
